@@ -96,8 +96,21 @@ void pop(node_tree** t, int value){
         } else pop(&(*t)->ln, value);
     } else if(value > (*t)->val){
         if(value == (*t)->rn->val){
-
+            int iter = find_to_pop((*t)->rn->ln);
+            if(iter == 0){
+                free((*t)->rn);
+                (*t)->rn = (*t)->rn ->rn;
+            } else if(iter == 1){
+                (*t)->rn -> val = (*t)->rn -> ln -> val;
+                free((*t)->rn -> ln);
+                (*t)->rn -> ln = NULL;
+            } else{
+                node_tree* aux = find_greatest((*t)->rn->ln);
+                (*t)->rn -> val = aux -> val;
+                free(aux);
+            }
         } else pop(&(*t)->rn, value);
+    } else{
     }
 }
 

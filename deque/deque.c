@@ -8,39 +8,47 @@ typedef struct node{
     struct node* prev;
 } node;
 
-typedef struct list{
+typedef struct deque{
     size_t size;
     node* head;
     node* tail;
-} list;
+} deque;
 
 
-list* create_list(){
-
-}
-
-node* create_node(){
+deque* create_deque(){
 
 }
 
-void append(){
+node* create_node(int value){
+    
+}
+
+void append_right(deque** dq){
 
 }
 
-int pop(){
+void append_left(deque** dq){
 
 }
 
-int remove(){
+int pop_right(deque** dq){
 
 }
 
-size_t search(){
+int pop_left(deque** dq){
 
 }
 
-size_t len(){
+int remove(deque** dq, int key){
 
+}
+
+size_t search(deque* dq, int key){
+
+}
+
+size_t len(deque* dq){
+    return dq->size;
 }
 
 int main(){

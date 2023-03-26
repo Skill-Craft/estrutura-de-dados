@@ -18,28 +18,28 @@ list* create_list(){
 
 }
 
-node* create_node(){
+node* create_node(int key){
+    
+}
+
+void append(list** l, int key){
 
 }
 
-void append(){
+int pop(list** l){
 
 }
 
-int pop(){
+int remove(list** l, int key){
 
 }
 
-int remove(){
+size_t search(list* l, int key){
 
 }
 
-size_t search(){
-
-}
-
-size_t len(){
-
+size_t len(list* l){
+return l->size;
 }
 
 int main(){

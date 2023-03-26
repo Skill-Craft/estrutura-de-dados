@@ -5,19 +5,22 @@
 typedef struct stack{
     int value;
     int flag;
+    size_t size;
     struct stack* prev;
 } stack;
 
 stack* create_stack(){
     stack* s = (stack*)malloc(sizeof(stack));
     s-> prev = NULL;
-    int flag=1;
+    s-> flag=1;
+    s-> size = 0;
     return s;
 }
 
 void append(stack** s, int val){
     stack* aux = create_stack();
     aux -> value = val;
+    aux -> size = (*s)->size+1;
     aux -> flag = 0;
     aux -> prev = *s;
     *s = aux;
@@ -36,13 +39,16 @@ int pop(stack** s){
     return val;
 }
 
-size_t size(stack* s){
-    size_t counter = 1;
+int find(stack* s, int key){
+    size_t size = s->size;
     while(!(s->flag)){
-        counter++;
+        if(s->value == key) return size - s->size + 1;
         s = s->prev;
     }
-    return counter-1;
+}
+
+size_t size(stack* s){
+    return s->size;
 }
 
 int main(){
@@ -50,9 +56,14 @@ int main(){
     append(&s,1);
     append(&s,12);
     append(&s,3);
-    pop(&s);
-    pop(&s);
-    int v = pop(&s);
+    append(&s,35);
+    append(&s,346);
+    append(&s,31);
+    int v = find(s,35);
+    // pop(&s);
+    // pop(&s);
+    // size_t sz = size(s);
+    // int v = pop(&s);
     printf("%d",v);
     return 0;
 }

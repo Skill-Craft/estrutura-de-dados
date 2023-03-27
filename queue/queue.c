@@ -81,8 +81,15 @@ void print_first(queue* q){
     printf("%d\n",q->head->val);
 }
 
-void free(queue** s){
-    
+void free(queue** q){
+
+    while((*q)->head != (*q)->last && (*q)->last != NULL){
+        node_queue* aux =  (*q)->head ->next;
+        free((*q)->head);
+        (*q)->head = aux;
+    }
+    if((*q)->head != NULL) free((*q)->head);
+    free(*q);
 }
 
 int main(){

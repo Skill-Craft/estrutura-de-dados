@@ -53,5 +53,6 @@ size_t size(stack* s){
 }
 
 void free(stack** s){
-    
+    while(pop(s) != -1) continue;
+    free((*s));
 }

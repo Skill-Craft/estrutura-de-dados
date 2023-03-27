@@ -15,15 +15,20 @@ typedef struct list{
 
 
 list* create_list(){
-
+    list* l = (list*)malloc(sizeof(list));
+    l->size = 0;
+    l->head = l->tail = NULL;
 }
 
 node* create_node(int key){
-    
+    node* new = (node*)malloc(sizeof(node));
+    new -> val = 0;
+    new -> next = NULL;
+    return new;
 }
 
 void append(list** l, int key){
-
+    
 }
 
 int pop(list** l){

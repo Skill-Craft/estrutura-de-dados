@@ -45,25 +45,9 @@ int find(stack* s, int key){
         if(s->value == key) return size - s->size + 1;
         s = s->prev;
     }
+    return -1;
 }
 
 size_t size(stack* s){
     return s->size;
-}
-
-int main(){
-    stack* s = create_stack();
-    append(&s,1);
-    append(&s,12);
-    append(&s,3);
-    append(&s,35);
-    append(&s,346);
-    append(&s,31);
-    int v = find(s,35);
-    // pop(&s);
-    // pop(&s);
-    // size_t sz = size(s);
-    // int v = pop(&s);
-    printf("%d",v);
-    return 0;
 }

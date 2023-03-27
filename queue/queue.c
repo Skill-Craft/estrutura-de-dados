@@ -50,7 +50,19 @@ int pop(queue** q){
 }
 
 size_t search(queue* q, int key){
-
+    size_t counter = 1;
+    if(q->head == NULL) return 0;
+    else if(q->head -> next == NULL){
+        if(q->head -> val == key) return counter;
+        else return 0;  
+    }
+    node_queue* aux = q->head;
+    while(aux->next != NULL){
+        if(aux -> val == key) return counter;
+        counter++;
+        aux = aux->next;
+    }
+    return 0;
 }
 
 size_t size(queue* q){
@@ -58,7 +70,11 @@ size_t size(queue* q){
 }
 
 void print_queue(queue* q){
-
+    node_queue* aux = q->head;
+    while(aux != NULL){
+        printf("%d ", aux->val);
+        aux = aux->next;
+    }
 }
 
 void print_first(queue* q){
@@ -71,12 +87,7 @@ int main(){
     append(&q, 20);
     append(&q, 30);
     // print_first(q);
-    int v = pop(&q);
-    printf("%d ",v);
-    // print_first(q);
-    v = pop(&q);
-    printf("%d ",v);
-    // print_first(q);
-    v = pop(&q);
-    printf("%d ",v);
+    // size_t v = search(q,20);
+    // printf("%d ",v);
+    print_queue(q);
 }

@@ -20,19 +20,33 @@ list* create_list(){
     l->head = l->tail = NULL;
 }
 
-node* create_node(int key){
+node* __create_node(int key){
     node* new = (node*)malloc(sizeof(node));
-    new -> val = 0;
+    new -> val = key;
     new -> next = NULL;
     return new;
 }
 
 void append(list** l, int key){
-    
+    (*l)->size++;
+    node* new = __create_node(key);
+    if((*l)->size == 0){
+        (*l)->head = (*l)->tail = new;
+        return;
+    }
+    (*l)->tail ->next = new;
+    (*l)->tail = new;
 }
 
 int pop(list** l){
-
+    node* aux = (*l)->head;
+    if((*l)->size == 0) return;
+    else if((*l)->size == 1){
+        
+    }
+    while(aux -> next ->next !=NULL){
+        aux = aux->next;
+    }
 }
 
 int remove(list** l, int key){

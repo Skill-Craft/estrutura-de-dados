@@ -51,3 +51,7 @@ int find(stack* s, int key){
 size_t size(stack* s){
     return s->size;
 }
+
+void free(stack** s){
+    
+}

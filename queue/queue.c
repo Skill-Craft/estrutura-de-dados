@@ -81,6 +81,10 @@ void print_first(queue* q){
     printf("%d\n",q->head->val);
 }
 
+void free(queue** s){
+    
+}
+
 int main(){
     queue* q = create_queue();
     append(&q, 10);

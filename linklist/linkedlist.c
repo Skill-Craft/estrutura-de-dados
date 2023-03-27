@@ -64,7 +64,7 @@ size_t remove(list** l, int key){
         if((*l)->head->val != key) return;
         return counter;
     } else if((*l)->size == 2){
-        
+
     }
     while(aux -> next ->next !=NULL){
         counter++;
@@ -91,6 +91,10 @@ size_t search(list* l, int key){
 
 size_t len(list* l){
 return l->size;
+}
+
+void free_all(list** l){
+
 }
 
 int main(){

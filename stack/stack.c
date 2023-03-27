@@ -52,7 +52,7 @@ size_t size(stack* s){
     return s->size;
 }
 
-void free(stack** s){
+void free_all(stack** s){
     while(pop(s) != -1) continue;
     free((*s));
 }

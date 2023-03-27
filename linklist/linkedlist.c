@@ -42,19 +42,51 @@ int pop(list** l){
     node* aux = (*l)->head;
     if((*l)->size == 0) return;
     else if((*l)->size == 1){
-        
+        int value = (*l)->head->val;
+        free((*l)->head);
+        return value;
     }
     while(aux -> next ->next !=NULL){
         aux = aux->next;
     }
+    int value = aux -> next; 
+    free(aux -> next);
+    aux -> next = NULL;
+    (*l)->tail = aux;
+    return value;
 }
 
-int remove(list** l, int key){
-
+size_t remove(list** l, int key){
+    size_t counter = 0;
+    node* aux = (*l)->head;
+    if((*l)->size == 0) return;
+    else if((*l)->size == 1){
+        if((*l)->head->val != key) return;
+        return counter;
+    } else if((*l)->size == 2){
+        
+    }
+    while(aux -> next ->next !=NULL){
+        counter++;
+        if(aux->next->val == key) break;
+        aux = aux->next;
+    }
+    if(aux->next == (*l)->tail && (*l)->tail->val != key) return;
+    free(aux -> next);
+    aux -> next = NULL;
+    return counter;
 }
 
 size_t search(list* l, int key){
-
+    size_t counter = 0;
+    node* aux = l->head;
+    while(aux != NULL){
+        counter++;
+        if(aux->val == key) break;
+        aux = aux->next;
+    }
+    if(aux == NULL) return;
+    return counter;
 }
 
 size_t len(list* l){

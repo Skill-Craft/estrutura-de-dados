@@ -80,6 +80,7 @@ int pop_left(deque** dq){
     (*dq)-> head = aux;
 }
 
+// TODO: Fix remove
 int remove(deque** dq, int key){
     size_t counter = 0;
     node* aux = (*dq)->head;
@@ -101,6 +102,7 @@ int remove(deque** dq, int key){
     return counter;
 }
 
+// TODO: Fix search
 size_t search(deque* dq, int key){
     size_t counter = 0;
     node* aux = dq->head;

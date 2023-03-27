@@ -36,20 +36,48 @@ void append_right(deque** dq, int key){
         return;
     }
     (*dq)->tail ->next = new;
-    // ! MISSING: new -> prev
+    new -> prev = (*dq)->tail;
     (*dq)->tail = new;  
 }
 
-void append_left(deque** dq){
-
+void append_left(deque** dq, int key){
+    (*dq)->size++;
+    node* new = __create_node(key);
+    if((*dq)->size == 0){
+        (*dq)->head = (*dq)->tail = new;
+        return;
+    }
+    (*dq)->head ->prev = new;
+    new -> next = (*dq)->head;
+    (*dq)->head = new;  
 }
 
 int pop_right(deque** dq){
-
+    if((*dq)->size == 0) return;
+    else if((*dq)->size == 1){
+        (*dq)->size--;
+        int value = (*dq)->head->val;
+        free((*dq)->head);
+        return value;
+    }
+    (*dq)->size--;
+    node* aux = (*dq)-> tail -> prev;
+    free((*dq)-> tail);
+    (*dq)-> tail = aux;
 }
 
 int pop_left(deque** dq){
-
+    if((*dq)->size == 0) return;
+    else if((*dq)->size == 1){
+        (*dq)->size--;
+        int value = (*dq)->head->val;
+        free((*dq)->head);
+        return value;
+    }
+    (*dq)->size--;
+    node* aux = (*dq)-> head -> next;
+    free((*dq)-> head);
+    (*dq)-> head = aux;
 }
 
 int remove(deque** dq, int key){

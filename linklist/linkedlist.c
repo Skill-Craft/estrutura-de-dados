@@ -41,11 +41,14 @@ void append(list** l, int key){
 int pop(list** l){
     node* aux = (*l)->head;
     if((*l)->size == 0) return;
+
     else if((*l)->size == 1){
+        (*l)->size--;
         int value = (*l)->head->val;
         free((*l)->head);
         return value;
     }
+    (*l)->size--;
     while(aux -> next ->next !=NULL){
         aux = aux->next;
     }
@@ -62,6 +65,7 @@ size_t remove(list** l, int key){
     if((*l)->size == 0) return;
     else if((*l)->size == 1){
         if((*l)->head->val != key) return;
+        (*l)->size--;
         return counter;
     } else if((*l)->size == 2){
 
@@ -72,6 +76,7 @@ size_t remove(list** l, int key){
         aux = aux->next;
     }
     if(aux->next == (*l)->tail && (*l)->tail->val != key) return;
+    (*l)->size--;
     free(aux -> next);
     aux -> next = NULL;
     return counter;

@@ -59,6 +59,11 @@ int pop(list** l){
     return value;
 }
 
+// TODO: Implement free_all
+int insert(list **l, int key, size_t pos){
+
+}
+
 size_t remove(list** l, int key){
     size_t counter = 0;
     node* aux = (*l)->head;
@@ -98,6 +103,7 @@ size_t len(list* l){
 return l->size;
 }
 
+// TODO: Implement free_all
 void free_all(list** l){
 
 }

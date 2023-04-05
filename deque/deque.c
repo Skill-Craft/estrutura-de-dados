@@ -53,7 +53,7 @@ void append_left(deque** dq, int key){
 }
 
 int pop_right(deque** dq){
-    if((*dq)->size == 0) return;
+    if((*dq)->size == 0) return -1;
     else if((*dq)->size == 1){
         (*dq)->size--;
         int value = (*dq)->head->val;
@@ -67,7 +67,7 @@ int pop_right(deque** dq){
 }
 
 int pop_left(deque** dq){
-    if((*dq)->size == 0) return;
+    if((*dq)->size == 0) return -1;
     else if((*dq)->size == 1){
         (*dq)->size--;
         int value = (*dq)->head->val;
@@ -81,12 +81,12 @@ int pop_left(deque** dq){
 }
 
 // TODO: Fix remove
-int remove(deque** dq, int key){
+int remove_element(deque** dq, int key){
     size_t counter = 0;
     node* aux = (*dq)->head;
-    if((*dq)->size == 0) return;
+    if((*dq)->size == 0) return -1;
     else if((*dq)->size == 1){
-        if((*dq)->head->val != key) return;
+        if((*dq)->head->val != key) return -1;
         return counter;
     } else if((*dq)->size == 2){
 
@@ -96,7 +96,7 @@ int remove(deque** dq, int key){
         if(aux->next->val == key) break;
         aux = aux->next;
     }
-    if(aux->next == (*dq)->tail && (*dq)->tail->val != key) return;
+    if(aux->next == (*dq)->tail && (*dq)->tail->val != key) return -1;
     free(aux -> next);
     aux -> next = NULL;
     return counter;
@@ -111,20 +111,32 @@ size_t search(deque* dq, int key){
         if(aux->val == key) break;
         aux = aux->next;
     }
-    if(aux == NULL) return;
+    if(aux == NULL) return -1;
     return counter;
 }
 
+// TODO: Implement insert_element
+int insert_element(deque** dq, int key, size_t pos){
+    
+}
 
 size_t len(deque* dq){
     return dq->size;
 }
 
 void free_all(deque **dq){
-
+    while((*dq) -> head != NULL){
+        pop_left(dq);
+    }
+    free(*dq);
 }
 
 int main(){
-
+    deque* dq = create_deque();
+    append_right(&dq,10);
+    append_right(&dq,20);
+    append_right(&dq,30);
+    // free_all(&dq);
+    
     return 0;
 }

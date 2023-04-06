@@ -31,7 +31,7 @@ node* __create_node(int value){
 void append_right(deque** dq, int key){
     (*dq)->size++;
     node* new = __create_node(key);
-    if((*dq)->size == 0){
+    if((*dq)->size == 1){
         (*dq)->head = (*dq)->tail = new;
         return;
     }
@@ -43,7 +43,7 @@ void append_right(deque** dq, int key){
 void append_left(deque** dq, int key){
     (*dq)->size++;
     node* new = __create_node(key);
-    if((*dq)->size == 0){
+    if((*dq)->size == 1){
         (*dq)->head = (*dq)->tail = new;
         return;
     }
@@ -52,18 +52,22 @@ void append_left(deque** dq, int key){
     (*dq)->head = new;  
 }
 
+
+// TODO: fix pop_right()
 int pop_right(deque** dq){
     if((*dq)->size == 0) return -1;
     else if((*dq)->size == 1){
         (*dq)->size--;
-        int value = (*dq)->head->val;
-        free((*dq)->head);
+        int value = (*dq)->tail->val;
+        free((*dq)->tail);
         return value;
     }
     (*dq)->size--;
     node* aux = (*dq)-> tail -> prev;
+    int value = (*dq)-> tail -> val;
     free((*dq)-> tail);
     (*dq)-> tail = aux;
+    return value;
 }
 
 int pop_left(deque** dq){
@@ -75,9 +79,11 @@ int pop_left(deque** dq){
         return value;
     }
     (*dq)->size--;
-    node* aux = (*dq)-> head -> next;
+    node* aux = (*dq) -> head -> next;
+    int value = (*dq) -> head -> val;
     free((*dq)-> head);
     (*dq)-> head = aux;
+    return value;
 }
 
 // TODO: Fix remove
@@ -115,6 +121,15 @@ size_t search(deque* dq, int key){
     return counter;
 }
 
+void print_deque(deque* dq){
+    node* aux = dq->head;
+    while(aux){
+        printf("%d ",aux->val);
+        aux = aux->next;
+    }
+    printf("\n");
+}
+
 // TODO: Implement insert_element
 int insert_element(deque** dq, int key, size_t pos){
     
@@ -136,6 +151,11 @@ int main(){
     append_right(&dq,10);
     append_right(&dq,20);
     append_right(&dq,30);
+    append_left(&dq, 40);
+    // pop_left(&dq);
+    pop_right(&dq);
+
+    print_deque(dq);
     // free_all(&dq);
     
     return 0;

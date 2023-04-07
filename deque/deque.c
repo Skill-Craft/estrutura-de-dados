@@ -155,10 +155,11 @@ int main(){
     append_right(&dq,30);
     append_left(&dq, 40);
     // pop_left(&dq);
-    pop_right(&dq);
-    printf("%d", search(dq, 20));
+    remove_element(&dq,20);
+    // pop_right(&dq);
+    // printf("%d", search(dq, 20));
     // printf("%d", dq->head->val);
-    // print_deque(dq);
+    print_deque(dq);
     // free_all(&dq);
     
     return 0;

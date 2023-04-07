@@ -53,7 +53,7 @@ void append_left(deque** dq, int key){
 }
 
 
-// TODO: fix pop_right()
+
 int pop_right(deque** dq){
     if((*dq)->size == 0) return -1;
     else if((*dq)->size == 1){
@@ -66,6 +66,7 @@ int pop_right(deque** dq){
     node* aux = (*dq)-> tail -> prev;
     int value = (*dq)-> tail -> val;
     free((*dq)-> tail);
+    aux -> next = NULL;
     (*dq)-> tail = aux;
     return value;
 }
@@ -83,6 +84,7 @@ int pop_left(deque** dq){
     int value = (*dq) -> head -> val;
     free((*dq)-> head);
     (*dq)-> head = aux;
+    aux -> prev = NULL;
     return value;
 }
 
@@ -108,13 +110,13 @@ int remove_element(deque** dq, int key){
     return counter;
 }
 
-// TODO: Fix search
+
 size_t search(deque* dq, int key){
     size_t counter = 0;
     node* aux = dq->head;
     while(aux != NULL){
-        counter++;
         if(aux->val == key) break;
+        counter++;
         aux = aux->next;
     }
     if(aux == NULL) return -1;
@@ -154,8 +156,9 @@ int main(){
     append_left(&dq, 40);
     // pop_left(&dq);
     pop_right(&dq);
-
-    print_deque(dq);
+    printf("%d", search(dq, 20));
+    // printf("%d", dq->head->val);
+    // print_deque(dq);
     // free_all(&dq);
     
     return 0;

@@ -55,7 +55,7 @@ void append_left(deque** dq, int key){
 
 
 int pop_right(deque** dq){
-    if((*dq)->size == 0) return -1;
+    if((*dq)->size == 0) return (*dq) -> size;
     else if((*dq)->size == 1){
         (*dq)->size--;
         int value = (*dq)->tail->val;
@@ -72,7 +72,7 @@ int pop_right(deque** dq){
 }
 
 int pop_left(deque** dq){
-    if((*dq)->size == 0) return -1;
+    if((*dq)->size == 0) return (*dq) -> size;
     else if((*dq)->size == 1){
         (*dq)->size--;
         int value = (*dq)->head->val;
@@ -92,21 +92,22 @@ int pop_left(deque** dq){
 int remove_element(deque** dq, int key){
     size_t counter = 0;
     node* aux = (*dq)->head;
-    if((*dq)->size == 0) return -1;
+    if((*dq)->size == 0) return (*dq) -> size;
     else if((*dq)->size == 1){
-        if((*dq)->head->val != key) return -1;
+        if((*dq)->head->val != key) return (*dq) -> size;
         return counter;
-    } else if((*dq)->size == 2){
-
     }
     while(aux -> next ->next !=NULL){
         counter++;
         if(aux->next->val == key) break;
         aux = aux->next;
     }
-    if(aux->next == (*dq)->tail && (*dq)->tail->val != key) return -1;
-    free(aux -> next);
-    aux -> next = NULL;
+    if(aux->next == (*dq)->tail && (*dq)->tail->val != key) return (*dq) -> size;
+    (*dq) -> size--;
+    node* aux2 = aux -> next;
+    aux -> next = aux -> next -> next;
+    if(aux -> next) aux -> next -> prev = aux;
+    free(aux2);
     return counter;
 }
 
@@ -119,7 +120,7 @@ size_t search(deque* dq, int key){
         counter++;
         aux = aux->next;
     }
-    if(aux == NULL) return -1;
+    if(aux == NULL) return dq -> size;
     return counter;
 }
 
@@ -134,7 +135,20 @@ void print_deque(deque* dq){
 
 // TODO: Implement insert_element
 int insert_element(deque** dq, int key, size_t pos){
+    if(pos > (*dq) -> size || pos < 0) return 0;
+    if(pos == (*dq) -> size) append_right(dq, key);
+    if(pos == 0) append_left(dq, key);
     
+    node* aux = (*dq) -> head;
+    for(int i = 0; i < pos - 1; i++) aux = aux -> next;
+    node* aux2 = __create_node(key);
+    if(aux -> next){
+        (*dq) -> size++;
+        aux2 -> next = aux -> next;
+        aux -> next -> prev = aux2;
+        aux2 -> prev = aux;
+        aux -> next = aux2;
+    }
 }
 
 size_t len(deque* dq){
@@ -155,7 +169,7 @@ int main(){
     append_right(&dq,30);
     append_left(&dq, 40);
     // pop_left(&dq);
-    remove_element(&dq,20);
+    remove_element(&dq,30);
     // pop_right(&dq);
     // printf("%d", search(dq, 20));
     // printf("%d", dq->head->val);

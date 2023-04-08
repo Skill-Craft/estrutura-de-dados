@@ -72,9 +72,8 @@ int insert(list **l, int key, size_t pos){
         return 1;
     }
     node* aux = (*l)->head;
-    for(int i = 0; i < pos-1; i++){
-        aux = aux -> next;
-    }
+    for(int i = 0; i < pos-1; i++) aux = aux -> next;
+    (*l) -> size++;
     node* aux2 = __create_node(key);
     aux2 -> next = aux -> next;
     aux -> next = aux2;
@@ -89,9 +88,10 @@ size_t remove_from_list(list** l, int key){
         if((*l)->head->val != key) return (*l)->size;
         (*l)->size--;
         return counter;
-    } else if((*l)->size == 2){
+    } 
+    // else if((*l)->size == 2){
 
-    }
+    // }
     while(aux -> next ->next !=NULL){
         counter++;
         if(aux->next->val == key) break;
@@ -146,11 +146,12 @@ int main(){
     append(&l,30);
     append(&l,40);
     append(&l,50);
-    pop(&l);
-    print_list(l);
-    printf("\n");
+    // remove_from_list(&l, 50);
+    // pop(&l);
+    // printf("\n");
     insert(&l,25,2);
     print_list(l);
+    // print_list(l);
     // printf("%d\n",remove_from_list(&l,30));
     // print_list(l);
     // printf("\n");

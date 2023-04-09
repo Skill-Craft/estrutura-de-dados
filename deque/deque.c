@@ -156,10 +156,7 @@ size_t len(deque* dq){
 }
 
 void free_all(deque **dq){
-    while((*dq) -> head != NULL){
-        pop_left(dq);
-    }
-    free(*dq);
+    while((*dq) -> size != 0) pop_left(dq);
 }
 
 int main(){
@@ -168,13 +165,14 @@ int main(){
     append_right(&dq,20);
     append_right(&dq,30);
     append_left(&dq, 40);
+    insert_element(&dq,25,2);
     // pop_left(&dq);
     remove_element(&dq,30);
     // pop_right(&dq);
     // printf("%d", search(dq, 20));
     // printf("%d", dq->head->val);
     print_deque(dq);
-    // free_all(&dq);
+    free_all(&dq);
     
     return 0;
 }

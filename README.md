@@ -10,5 +10,4 @@ Dentre elas, temos:
 ### Árvore binária
 ### Árvore binária de busca
 ### Hash Table
-
-Finalizando, há também o trabalho de algoritmo de Huffman.
+Em seguida, algumas classes da biblioteca STL de C++ serao reimplementadas usando os conhecimentos adquiridos. <br> Finalmente, algumas estruturas especiais como Data Frames e tensores serão criados em C++, além de ser implementado o algoritmo de Huffman em C.

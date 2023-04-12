@@ -12,6 +12,8 @@ typedef struct circular_list{
     int size;
 } clist;
 
+// TODO: SWITCH WHILE LOOPS FOR DO WHILES
+
 node* __create_node(int key){
     node* aux = calloc(1, sizeof(node));
     aux -> value = key;
@@ -69,11 +71,34 @@ int insert(clist** list, int key, size_t pos){
 }
 
 int pop(clist** list){
-
+    if((*list) -> size == 1){
+        int val = (*list) -> head -> value;
+        node* aux = (*list) -> head;
+        (*list) -> head = (*list) -> pseudotail = NULL;
+        free(aux);
+        return val;
+    }
+    int val = (*list) -> pseudotail -> value;
+    node* aux = (*list) -> head;
+    while(aux -> next != (*list) -> pseudotail) aux = aux -> next;
+    free((*list) -> pseudotail);
+    (*list) -> pseudotail = aux;
+    return val;
 }
 
 int __pop_first(clist** list){
-
+    if((*list) -> size == 1){
+        int val = (*list) -> head -> value;
+        node* aux = (*list) -> head;
+        (*list) -> head = (*list) -> pseudotail = NULL;
+        free(aux);
+        return val;
+    }
+    int val = (*list) -> head -> value;
+    (*list) -> pseudotail -> next = (*list) -> head ->next;
+    free((*list) -> head);
+    (*list) -> head = (*list) -> pseudotail -> next;
+    return val;
 }
 
 int remove_from_list(clist** list, size_t pos){
@@ -99,17 +124,22 @@ size_t len(clist* list){
 }
 
 void free_all(clist** list){
-    // node* aux = list -> head;
-    // if(list->size == 1){
-    //     // TODO
-    //     return;
-    // }
-    // while(aux != list -> pseudotail){
-    //     printf("%d ", aux -> value);
-    //     aux = aux -> next;
-    // }
-    // aux = aux -> next;
-    // printf("%d\n", aux->value);
+    node *aux = (*list) -> head, *aux2 = (*list) -> head -> next;
+    if((*list)->size == 1){
+        free(aux);
+        (*list) -> pseudotail = (*list) -> head = NULL;
+        free(*list);    
+        return;
+    }
+    while(aux2 != (*list) -> pseudotail){
+        free(aux);
+        aux = aux2;
+        aux2 = aux2->next;
+    }
+    free(aux);
+    free(aux2);
+    (*list) -> pseudotail = (*list) -> head = NULL;
+    free(*list); 
 }
 
 int main(){
@@ -117,9 +147,8 @@ int main(){
     append(&l, 1);
     append(&l, 2);
     append(&l, 3);
-    printf("%d\n", l->size);
+    free_all(&l);
     // printf("%d", l->pseudotail->value);
-    insert(&l,4,2);
     print_circular_list(l);
     return 0;
 }

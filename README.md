@@ -17,12 +17,13 @@ Em seguida, algumas classes da biblioteca STL de C++ serao reimplementadas usand
 ### istream
 ### set
 ### vector
+### string
 ### map
 ### unordered map
+### iterator
 ### queue
 ### priority queue
 ### stack
-### string
 ### unique pointer
 ### shared pointer
  <br> Finalmente, algumas estruturas especiais como Data Frames e tensores serão criados em C++, além de ser implementado o algoritmo de Huffman em C.

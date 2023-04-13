@@ -20,7 +20,7 @@ class str{
         str();
         str(const str& src);
         str(str&& src);
-        size_t lentgh();
+        size_t length();
         size_t capacity();
         str& operator+(const str& other);
         str& operator+=(const str& other);
@@ -32,6 +32,12 @@ class str{
         str copy(size_t begin=0, size_t end=0);
         str find(str& substr);
         str rfind(str& substr);
+        str& insert(char c, size_t pos);
+        str& insert(const str& s, size_t pos);
+        str& push_back();
+        str& pop(char c, size_t pos);
+        str& pop(const str& s, size_t pos);
+        str& pop_back();
         void clear();
         bool empty();
         char operator[](size_t index);

@@ -4,6 +4,8 @@
         "vector": "cpp",
         "*.tcc": "cpp",
         "ostream": "cpp",
-        "charconv": "cpp"
+        "charconv": "cpp",
+        "istream": "cpp",
+        "valarray": "cpp"
     }
 }

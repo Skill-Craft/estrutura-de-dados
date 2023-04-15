@@ -12,7 +12,11 @@ class Range{
         T final_value;
         T step;
         size_t iter;
+        
         vector<T> arr;
+        
+        typedef const T* iterator;         
+
         void build_array(){
             while(next()){
                 arr.push_back(current());    
@@ -44,9 +48,32 @@ class Range{
         }
 
         size_t current(){
-            return step*(iter-1);
+            return static_cast<T>(initial_value+step*(iter-1));
         }
 
+        iterator begin(){
+            if(arr.empty()) build_array();
+            return &arr[0];
+        }
+
+        iterator end(){
+            if(arr.empty()) build_array();
+            return &arr[arr.size()-1];
+        }
+
+        ~Range(){
+            
+        }
+
+        // vector::reverse_iterator<T> rbegin(){
+        //     if(arr.empty()) build_array();
+        //     return arr.rbegin();
+        // }
+
+        // vector::reverse_iterator<T> rend(){
+        //     if(arr.empty()) build_array();
+        //     return arr.rend();
+        // }
 
 };
 
@@ -80,11 +107,16 @@ class array{
 
 
 int main(){
-    range r(10,100,5);
-    Range<char> n('a', 'r', (char)3);
-    while(r.next()){
-        cout << r.current() << endl;
+    range r(10,40,5);
+    vector<int> v{10,20,30,40,50};
+    
+    for(auto x: r){
+        cout<<x<<endl;
     }
+    
+    // for(size_t x: r){
+
+    // }
     // array<int> v;
     // vector<int> arr;
     

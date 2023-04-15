@@ -20,7 +20,6 @@ Em seguida, algumas classes da biblioteca STL de C++ serao reimplementadas usand
 ### string
 ### map
 ### unordered map
-### iterator
 ### queue
 ### priority queue
 ### stack

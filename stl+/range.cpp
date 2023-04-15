@@ -12,15 +12,17 @@ class Range{
         T final_value;
         T step;
         size_t iter;
-        T* arr;
-        void build_arrayy(){
-
+        vector<T> arr;
+        void build_array(){
+            while(next()){
+                arr.push_back(current());    
+            }
         }
 
     public:
-        Range(): initial_value{}, final_value{}, step{} {arr = nullptr; iter = 0;}
-        // Range(T end, T step = 1): initial_value{}, final_value{end}, step{step} {arr = nullptr; iter = 0;}
-        Range(T begin, T end, T step = 1): initial_value{begin}, final_value{end}, step{step} {arr = nullptr; iter = 0;}
+        Range(): initial_value{}, final_value{}, step{}, iter{}, arr{} {}
+        // Range(T end, T step = 1): initial_value{}, final_value{end}, step{step}, iter{}, arr{} {}
+        Range(T begin, T end, T step = 1): initial_value{begin}, final_value{end}, step{step}, iter{}, arr{} {}
         // TODO: move/ copy constructor and operator= and fix the ambiguity 
         
         
@@ -29,8 +31,8 @@ class Range{
             else return (final_value-initial_value)/step;
         }
         
-        T*& list() const{
-            if(!arr) build_arrayy();
+        vector<T> list(){
+            if(arr.empty()) build_array();
             return arr;
         }
 
@@ -50,6 +52,7 @@ class Range{
 
 class range: public Range<size_t>{
     // TODO: constructors and operator=
+    using Range::Range;
 };
 
 // Proof of concept: slicing
@@ -77,16 +80,20 @@ class array{
 
 
 int main(){
-    Range<size_t> r(0,100,5);
-    
-    array<int> v;
-    vector<int> arr;
-    
-    for(int i=0; i<100; i++){
-        v.push_back(i);
+    range r(10,100,5);
+    Range<char> n('a', 'r', (char)3);
+    while(r.next()){
+        cout << r.current() << endl;
     }
-    vector<int> v2 = v[Range<size_t>(0,100,5)];
-    for(auto x: v2){ cout << x << endl; }
+    // array<int> v;
+    // vector<int> arr;
+    
+    // for(int i=0; i<100; i++){
+    //     v.push_back(i);
+    // }
+    // vector<size_t> v2(range(0,100,5).list());
+    // v2[0] = 2;
+    // for(auto x: r.list()){ cout << x << endl;}
     return 0;
 }
 

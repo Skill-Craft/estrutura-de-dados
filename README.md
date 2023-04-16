@@ -1,5 +1,5 @@
 # estrutura de dados
-Principais estruturas de dados, lecionados na disciplina de mesmo nome no IME
+Neste repositório foram implementadas as principais estruturas de dados em C, além de alguns algoritmos de ordenação de vetores, ambos lecionados na disciplina Estrutura de Dados, no IME.
 
 Dentre elas, temos:
 
@@ -11,7 +11,19 @@ Dentre elas, temos:
 ### Árvore binária
 ### Árvore binária de busca
 ### Hash Table
-Em seguida, algumas classes da biblioteca STL de C++ serao reimplementadas usando os conhecimentos adquiridos. Entre eles, estão:
+
+Os algoritmos de ordenação de vetores são:
+
+### Bubble sort
+### Bucket sort
+### Heap sort
+### Insert sort
+### Merge sort
+### Quick sort
+### Select sort
+### Shell sort
+
+Também se encontra neste repositório algumas classes da biblioteca STL de C++, que serão reimplementadas usando os conhecimentos adquiridos. Entre elas, estão:
 
 ### ostream
 ### istream
@@ -25,4 +37,4 @@ Em seguida, algumas classes da biblioteca STL de C++ serao reimplementadas usand
 ### stack
 ### unique pointer
 ### shared pointer
- <br> Finalmente, algumas estruturas especiais como Data Frames e tensores serão criados em C++, além de ser implementado o algoritmo de Huffman em C.
+ <br> Finalmente, algumas estruturas especiais como Data Frames, tensores e range serão criados em C++, além de ser implementado o algoritmo de Huffman em C.

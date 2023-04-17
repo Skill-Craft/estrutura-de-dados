@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include "../stl/umap.cpp"
 
 using namespace std;
 
@@ -34,6 +33,10 @@ class Series{
             data.push_back(x);
         }
 
+        void add(const vector<T>& x){
+            data.insert(data.end(), x.begin(), x.end());
+        }
+
         void remove(T x){
             data.erase(find(data.begin(), data.end(), x));
         }
@@ -42,17 +45,41 @@ class Series{
             return data[i];
         }
 
+        Series<T>& operator=(const Series<T>& x){
+            data = x.data;
+            return *this;
+        }
+
         Series<T>& operator+(T x) const{
             Series<T> y(*this);
-            for(auto element : y.data){
-                element += x;
-            }
+            for(auto it=y.data.begin(); it!=y.data.end();it++) *it+=x;
+            return y;
+        }
+
+        Series<T>& operator-(T x) const{
+            Series<T> y(*this);
+            for(auto it=y.data.begin(); it!=y.data.end();it++) *it-=x;
+            return y;
+        }
+
+        Series<T>& operator*(T x) const{
+            Series<T> y(*this);
+            for(auto it=y.data.begin(); it!=y.data.end();it++) *it*=x;
+            return y;
+        }
+
+        Series<T>& operator/(T x) const{
+            Series<T> y(*this);
+            for(auto it=y.data.begin(); it!=y.data.end();it++) *it/=x;
             return y;
         }
         // TODO: add operator+, operator-,operator*,operator/ as a operate-in-all-elements ,operator=, ...
 };
 
 
+template<typename T>
 class DataFrame{
-    
+    // TODO: switch map to an unordered map that remembers insertion order (preferably my own umap),
+    // and make it so that series of any data type can be added 
+    map<string, Series<T>> cols;
 };

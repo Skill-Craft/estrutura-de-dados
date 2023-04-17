@@ -50,6 +50,21 @@ class Series{
             return *this;
         }
 
+        Series<T>& operator=(const vector<T>& x){
+            data = x;
+            return *this;
+        }
+
+        Series<T>& operator=(Series<T>&& x){
+            data = move(x.data);
+            return *this;
+        }
+
+        Series<T>& operator=(vector<T>&& x){
+            data = move(x);
+            return *this;
+        }
+
         Series<T>& operator+(T x) const{
             Series<T> y(*this);
             for(auto it=y.data.begin(); it!=y.data.end();it++) *it+=x;
@@ -81,5 +96,25 @@ template<typename T>
 class DataFrame{
     // TODO: switch map to an unordered map that remembers insertion order (preferably my own umap),
     // and make it so that series of any data type can be added 
-    map<string, Series<T>> cols;
+    // OBS: operator[] should be able to append a series to the dataframe, if it is not present
+    map<string, Series<T>> data;
+    vecotr<string> index;
+    vector<string> columns;
+
+    public:
+    //     DataFrame() {}
+        
+    //     select_row();
+    //     select_column();
+    //     friend cross_tables(Dataframe& df1, Dataframe& df2);
+
+    //     append_column();
+    //     append_row();
+    //     append(axes=0);
+    //     DataFrame<T>& operator=(const DataFrame<T>& x){
+    //     }
+
+    //     operator[]();
+    //     operator=();
+        
 };

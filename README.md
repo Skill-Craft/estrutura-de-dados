@@ -3,38 +3,38 @@ Neste repositório foram implementadas as principais estruturas de dados em C, a
 
 Dentre elas, temos:
 
-### Pilha
-### Fila
-### Lista encadeada
-### Lista duplamente encadeada
-### Lista encadeada circular
-### Árvore binária
-### Árvore binária de busca
-### Hash Table
+<br> - Pilha
+<br> - Fila
+<br> - Lista encadeada
+<br> - Lista duplamente encadeada
+<br> - Lista encadeada circular
+<br> - Árvore binária
+<br> - Árvore binária de busca
+<br> - Hash Table
 
 Os algoritmos de ordenação de vetores são:
 
-### Bubble sort
-### Bucket sort
-### Heap sort
-### Insert sort
-### Merge sort
-### Quick sort
-### Select sort
-### Shell sort
+<br> - Bubble sort
+<br> - Bucket sort
+<br> - Heap sort
+<br> - Insert sort
+<br> - Merge sort
+<br> - Quick sort
+<br> - Select sort
+<br> - Shell sort
 
 Também se encontra neste repositório algumas classes da biblioteca STL de C++, que serão reimplementadas usando os conhecimentos adquiridos. Entre elas, estão:
 
-### ostream
-### istream
-### set
-### vector
-### string
-### map
-### unordered map
-### queue
-### priority queue
-### stack
-### unique pointer
-### shared pointer
+<br> - ostream
+<br> - istream
+<br> - set
+<br> - vector
+<br> - string
+<br> - map
+<br> - unordered map
+<br> - queue
+<br> - priority queue
+<br> - stack
+<br> - unique pointer
+<br> - shared pointer
  <br> Finalmente, algumas estruturas especiais como Data Frames, tensores e range serão criados em C++, além de ser implementado o algoritmo de Huffman em C.

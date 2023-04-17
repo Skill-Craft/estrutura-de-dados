@@ -1,4 +1,4 @@
-# estrutura de dados
+# Estrutura de dados
 Neste repositório foram implementadas as principais estruturas de dados em C, além de alguns algoritmos de ordenação de vetores, ambos lecionados na disciplina Estrutura de Dados, no IME.
 
 Dentre elas, temos:

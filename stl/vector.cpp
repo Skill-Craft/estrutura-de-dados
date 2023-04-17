@@ -1,10 +1,11 @@
 #include <iostream>
+#include <functional>
 
 using namespace std;
 
 
 template<typename T>
-class vector{
+class Vector{
     private:
         T* data;
         size_t size;
@@ -12,9 +13,23 @@ class vector{
         static constexpr size_t init_cp = 20;
 
     public:
-        vector(): size{}, cp{init_cp}, data{new T[init_cp]} {}
+        Vector(): size{}, cp{init_cp}, data{new T[init_cp]} {}
+
+        Vector(T base_element, size_t size): size(size), data(new T[size]), cp(size+20) {
+            for (size_t i = 0; i < size; i++) {
+                data[i] = base_element;
+            }
+        }
+
+        Vector(T initial_element, size_t size, function<T,(T)> function): size(size), data(new T[size]), cp(size+20){
+            T rec = initial_element;
+            for (size_t i = 0; i < size; i++) {
+                data[i] = rec;
+                rec = function(rec);
+            }
+        }
         
-        vector(vector<T> &&__other){
+        Vector(Vector<T> &&__other){
             data = __other.data;
             size = __other.size;
             cp = __other.cp;
@@ -23,7 +38,7 @@ class vector{
             __other.cp = 0;
         }
 
-        vector(const vector<T>& __other){
+        Vector(const Vector<T>& __other){
             size = __other.size;
             cp = __other.cp;
             data = new T[size];
@@ -32,15 +47,15 @@ class vector{
             }
         }
 
-        // vector() slicing type
+        // Vector() slicing type
 
-        ~vector(){
+        ~Vector(){
             delete[] data;
         }
 
-        vector<T>& operator=(vector<T> &&__other){}
+        Vector<T>& operator=(Vector<T> &&__other){}
 
-        vector<T>& operator=(const vector<T>& __other){}
+        Vector<T>& operator=(const Vector<T>& __other){}
 
         void push_back(const T& __value){
             if(size == cp){
@@ -81,7 +96,7 @@ class vector{
 
 
 int main(){
-    vector<int> v;
+    Vector<int> v;
     v.push_back(1);
     v.push_back(2);
     v.push_back(3);

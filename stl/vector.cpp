@@ -1,5 +1,5 @@
 #include <iostream>
-#include <functional>
+// #include "../stl+/range.cpp"
 
 using namespace std;
 
@@ -21,11 +21,20 @@ class Vector{
             }
         }
 
-        Vector(T initial_element, size_t size, function<T,(T)> function): size(size), data(new T[size]), cp(size+20){
+        Vector(T initial_element, size_t size, T (*fn)(T)): size(size), cp(size+20), data(new T[cp]){
             T rec = initial_element;
             for (size_t i = 0; i < size; i++) {
                 data[i] = rec;
-                rec = function(rec);
+                rec = fn(rec);
+            }
+        }
+
+        Vector(initializer_list<T>& initial){
+            size = initial.size();
+            cp = initial.size()+20;
+            data = new T[cp];
+            for (size_t i = 0; i < size; i++) {
+                data[i] = initial.begin()[i];
             }
         }
         
@@ -70,12 +79,27 @@ class Vector{
             data[size++] = __value;
         }
 
+        void push_back(initializer_list<T>& __list){
+
+        }
+
+        void insert(const T& __value, size_t __index){}
+
         void pop_back(){
             size--;
         }
 
-        T& operator[](size_t __index){
-            return data[__index];
+        void remove(size_t __index){
+            
+        }
+
+        T& operator[](long long __index){
+            if(__index <= size && __index >=0){
+                return data[__index];
+            } else if(__index < 0 && __index >=-size){
+                return data[size+__index];
+            }
+            else throw out_of_range("index out of range");
         }
 
         size_t length(){
@@ -91,33 +115,27 @@ class Vector{
             cp = 0;
         }
 
-        void resize(size_t __new_size){}
+        void resize(size_t __new_size){
+            if(__new_size >= cp){
+                T* temp = new T[cp * 2];
+                for(size_t i = 0; i < size; i++){
+                    temp[i] = data[i];
+                }
+                delete[] data;
+                data = temp;
+                cp *= 2;
+            } 
+            if(__new_size < size){
+
+            } else{
+
+            }
+        }
 };
 
 
 int main(){
-    Vector<int> v;
-    v.push_back(1);
-    v.push_back(2);
-    v.push_back(3);
-    v.push_back(4);
-    v.push_back(5);
-    v.push_back(6);
-    v.push_back(7);
-    v.push_back(8);
-    v.push_back(9);
-    v.push_back(10);
-    v.push_back(11);
-    v.push_back(12);
-    v.push_back(13);
-    v.push_back(14);
-    v.push_back(15);
-    v.push_back(16);
-    v.push_back(17);
-    v.push_back(18);
-    v.push_back(19);
-    v.push_back(20);
-    v.push_back(21);
+    Vector<int> v(1,4,[] (int arg){return arg+2;});
     for(int i=0; i < v.length(); i++) {
         cout << v[i] << endl;
     }

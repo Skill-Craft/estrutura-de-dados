@@ -1,5 +1,5 @@
 #include <iostream>
-// #include "../stl+/range.cpp"
+
 
 using namespace std;
 
@@ -29,7 +29,7 @@ class Vector{
             }
         }
 
-        Vector(initializer_list<T>& initial){
+        Vector(const initializer_list<T>& initial){
             size = initial.size();
             cp = initial.size()+20;
             data = new T[cp];
@@ -62,9 +62,27 @@ class Vector{
             delete[] data;
         }
 
-        Vector<T>& operator=(Vector<T> &&__other){}
+        Vector<T>& operator=(Vector<T> &&__other){
+            data = __other.data;
+            size = __other.size;
+            cp = __other.cp;
+            __other.data = nullptr;
+            __other.size = 0;
+            __other.cp = 0;
+            return *this;
+        }
 
-        Vector<T>& operator=(const Vector<T>& __other){}
+        Vector<T>& operator=(const Vector<T>& __other){
+            T* aux = new T[__other.size];
+            for(size_t i = 0; i < __other.size; i++){
+                aux[i] = __other.data[i];
+            }
+            delete[] data;
+            data = aux;
+            size = __other.size;
+            cp = __other.cp;
+            return *this;
+        }
 
         void push_back(const T& __value){
             if(size == cp){
@@ -79,17 +97,29 @@ class Vector{
             data[size++] = __value;
         }
 
-        void push_back(initializer_list<T>& __list){
-
+        void push_back(const initializer_list<T>& __list){
+            for(auto it = __list.begin(); it != __list.end();it++){
+                push_back(*it);
+            }
         }
 
-        void insert(const T& __value, size_t __index){}
+        void insert(const T& __value, size_t __index){
+            if(__index == size){
+                push_back(__value);
+            } else if(__index == 0){
+
+            } if(__index > size || __index < 0){
+
+            }
+            // T* part1 = new T[__index];
+            // T* part2 = new T[size - __index];
+        }
 
         void pop_back(){
             size--;
         }
 
-        void remove(size_t __index){
+        void erase(size_t __index){
             
         }
 
@@ -104,6 +134,10 @@ class Vector{
 
         size_t length(){
             return size;
+        }
+
+        size_t capacity(){
+            return cp;
         }
 
         bool empty(){
@@ -131,13 +165,48 @@ class Vector{
 
             }
         }
+
+        void reserve(size_t __new_size){
+            cp = __new_size;
+        }
+
+        void shrink_to_fit(){
+            cp = size;
+        }
+
+        T at(long long __index){
+            return this->operator[](__index);
+        }
+
+        T front(){
+            return data[0];
+        }
+
+        T back(){
+            return data[size-1];
+        }
+
+        void swap(Vector<T> & __other){
+            Vector<T> tmp = __other;
+            __other = *this;
+            *this = tmp;
+        }
+
+        void print(){
+            for(int i=0; i < size; i++) {
+                cout << data[i] << endl;
+            }
+        }
 };
 
 
 int main(){
-    Vector<int> v(1,4,[] (int arg){return arg+2;});
-    for(int i=0; i < v.length(); i++) {
-        cout << v[i] << endl;
-    }
+    Vector<int> v;
+    // Vector<int> s;
+    v.push_back({1,2,3,4,5,6,6,7});
+    // s.push_back({1,2,2,2,2,3,465,4,3});
+    v = Vector<int>({1,2,3,5,6});
+    cout << v.back() << endl;
+    v.print();
     return 0;
 }

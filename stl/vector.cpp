@@ -115,8 +115,8 @@ class Vector{
             // T* part2 = new T[size - __index];
         }
 
-        void pop_back(){
-            size--;
+        T pop_back(){
+          return data[--size];  
         }
 
         void erase(size_t __index){
@@ -130,6 +130,16 @@ class Vector{
                 return data[size+__index];
             }
             else throw out_of_range("index out of range");
+        }
+
+        Vector<T> operator[](Vector<bool>& __indexes){
+            Vector<T> result;
+            for(int i=0;i<__indexes.length();i++){
+                if(__indexes[i]){
+                    result.push_back(data[i]);
+                }
+            }
+            return result;
         }
 
         size_t length(){
@@ -202,11 +212,10 @@ class Vector{
 
 int main(){
     Vector<int> v;
-    // Vector<int> s;
     v.push_back({1,2,3,4,5,6,6,7});
-    // s.push_back({1,2,2,2,2,3,465,4,3});
-    v = Vector<int>({1,2,3,5,6});
-    cout << v.back() << endl;
-    v.print();
+    Vector<bool> s{true,true,true,false,false,true,true,false};
+    Vector<int> t;
+    t=v[s];
+    t.print();
     return 0;
 }

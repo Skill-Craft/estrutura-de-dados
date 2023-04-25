@@ -84,6 +84,16 @@ class Vector{
             return *this;
         }
 
+        Vector<T> operator+(Vector<T> &__other){
+            Vector<T> result = *this;
+            for(size_t i = 0; i < __other.size; i++) result.push_back(__other[i]);
+            return result;
+        }
+
+        void operator+=(Vector<T>& __other){
+            for (size_t i = 0; i < __other.size; i++) push_back(__other[i]);
+        }
+
         void push_back(const T& __value){
             if(size == cp){
                 T* temp = new T[cp * 2];
@@ -141,6 +151,108 @@ class Vector{
             }
             return result;
         }
+
+        // class Iterator{
+        // public:
+        //     Iterator(T curr, T step, size_t maximum) : curr{curr}, step{step}, maximum{maximum} {}
+
+        //     // TODO: operator+, operator-, operator=, operator-- (both), operator bool, ...
+
+        //     bool operator==(const Iterator &other) const
+        //     {
+        //         return curr == other.curr && step == other.step;
+        //     }
+
+        //     bool operator!=(const Iterator &other) const
+        //     {
+        //         return curr != other.curr || step != other.step;
+        //     }
+
+        //     Iterator &operator+(const T &passages)
+        //     {
+        //         if (counter + passages <= maximum)
+        //         {
+        //             curr += step * passages;
+        //             counter += passages;
+        //             return *this;
+        //         }
+        //         else
+        //             throw out_of_range("iterator overflow");
+        //     }
+
+        //     Iterator &operator++()
+        //     {
+        //         if (counter + 1 <= maximum)
+        //         {
+        //             curr += step;
+        //             return *this;
+        //         }
+        //         else
+        //             throw out_of_range("iterator overflow");
+        //     }
+
+        //     Iterator operator++(int)
+        //     {
+        //         if (counter + 1 <= maximum)
+        //         {
+        //             Iterator current(curr, step);
+        //             curr += step;
+        //             counter++;
+        //             return current;
+        //         }
+        //         else
+        //             throw out_of_range("iterator overflow");
+        //     }
+
+        //     Iterator &operator-(const T &passages)
+        //     {
+        //         if (counter - passages >= 0)
+        //         {
+        //             curr -= step * passages;
+        //             counter -= passages;
+        //             return *this;
+        //         }
+        //         else
+        //             throw out_of_range("iterator underflow");
+        //     }
+
+        //     Iterator &operator--()
+        //     {
+        //         if (counter - 1 >= 0)
+        //         {
+        //             curr -= step;
+        //             counter -= 1;
+        //             return *this;
+        //         }
+        //         else
+        //             throw out_of_range("iterator underflow");
+        //     }
+
+        //     Iterator operator--(int)
+        //     {
+        //     }
+
+        //     T operator*() const
+        //     {
+        //         return curr;
+        //     }
+
+        // private:
+        //     T curr;
+        //     T step;
+        //     size_t counter;
+        //     size_t maximum;
+        // };
+
+        // Iterator begin() const{
+        //     return Iterator{initial_value, step, amount()};
+        // }
+
+        // Iterator end() const{
+        //     size_t temp = initial_value;
+        //     temp = temp + step*amount();
+        //     return Iterator{temp, step, amount()};
+        // }
 
         size_t length(){
             return size;
@@ -207,15 +319,51 @@ class Vector{
                 cout << data[i] << endl;
             }
         }
+
+        void sort(bool reversed= false){
+            if(!reversed){
+                // merge sort 
+            } else{
+                // reversed merge sort
+            }
+        }
+
+        void reverse(){
+            for(size_t i = 0; i < size/2; i++){
+                T temp = data[i];
+                data[i] = data[size-i-1];
+                data[size-i-1] = temp;
+            }
+        }
+
+        Vector<T>& concat(Vector<T>& __other, int axis=0, bool sorted=false){
+            if(!axis){
+                if(!sorted)operator+=(__other);
+                else{
+
+                }        
+            } else{
+                if(!sorted) *this = __other + *this;
+                else{
+
+                }
+            }
+            return *this;
+        }
+
+        Vector<T> &merge(Vector<T> &__other, int axis = 0){
+            
+        }
+ 
 };
 
-
-int main(){
-    Vector<int> v;
-    v.push_back({1,2,3,4,5,6,6,7});
-    Vector<bool> s{true,true,true,false,false,true,true,false};
-    Vector<int> t;
-    t=v[s];
-    t.print();
-    return 0;
+        int main()
+        {
+            Vector<int> v;
+            v.push_back({1, 2, 3});
+            Vector<bool> s{true, true, true, false, false, true, true, false};
+            Vector<int> t{1, 2, 4};
+            t.concat(v, 0);
+            t.print();
+            return 0;
 }

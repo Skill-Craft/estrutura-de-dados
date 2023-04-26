@@ -56,7 +56,7 @@ class Vector{
             }
         }
 
-        // Vector() slicing type
+        // Vector(slicing type)
 
         ~Vector(){
             delete[] data;
@@ -92,6 +92,10 @@ class Vector{
 
         void operator+=(Vector<T>& __other){
             for (size_t i = 0; i < __other.size; i++) push_back(__other[i]);
+        }
+
+        operator bool(){
+            return size!= 0;
         }
 
         void push_back(const T& __value){
@@ -152,107 +156,71 @@ class Vector{
             return result;
         }
 
-        // class Iterator{
-        // public:
-        //     Iterator(T curr, T step, size_t maximum) : curr{curr}, step{step}, maximum{maximum} {}
+        class Iterator{
+            private:
+                T* data;
+            
+            public:
+                Iterator(T* __data): data(__data){}
+                Iterator(const Iterator& __other): data(__other.data){}
+                ~Iterator(){}
+                Iterator& operator=(const Iterator& __other){
+                    data = __other.data;
+                    size = __other.size;
+                    return *this;
+                }
 
-        //     // TODO: operator+, operator-, operator=, operator-- (both), operator bool, ...
+                Iterator& operator++(){
+                    data++;
+                    return *this;
+                }
 
-        //     bool operator==(const Iterator &other) const
-        //     {
-        //         return curr == other.curr && step == other.step;
-        //     }
+                Iterator &operator++(int){
+                    data++;
+                    return *this;
+                }
 
-        //     bool operator!=(const Iterator &other) const
-        //     {
-        //         return curr != other.curr || step != other.step;
-        //     }
+                Iterator &operator+(long long steps){
+                    data +=steps;
+                    return *this;
+                }
 
-        //     Iterator &operator+(const T &passages)
-        //     {
-        //         if (counter + passages <= maximum)
-        //         {
-        //             curr += step * passages;
-        //             counter += passages;
-        //             return *this;
-        //         }
-        //         else
-        //             throw out_of_range("iterator overflow");
-        //     }
+                Iterator &operator-(){
+                    data--;
+                    return *this;
+                }
 
-        //     Iterator &operator++()
-        //     {
-        //         if (counter + 1 <= maximum)
-        //         {
-        //             curr += step;
-        //             return *this;
-        //         }
-        //         else
-        //             throw out_of_range("iterator overflow");
-        //     }
+                Iterator &operator-(int){
+                    data--;
+                    return *this;
+                }
 
-        //     Iterator operator++(int)
-        //     {
-        //         if (counter + 1 <= maximum)
-        //         {
-        //             Iterator current(curr, step);
-        //             curr += step;
-        //             counter++;
-        //             return current;
-        //         }
-        //         else
-        //             throw out_of_range("iterator overflow");
-        //     }
+                Iterator &operator-(long long steps){
+                    data -= steps;
+                    return *this;
+                }
 
-        //     Iterator &operator-(const T &passages)
-        //     {
-        //         if (counter - passages >= 0)
-        //         {
-        //             curr -= step * passages;
-        //             counter -= passages;
-        //             return *this;
-        //         }
-        //         else
-        //             throw out_of_range("iterator underflow");
-        //     }
+                T& operator*(){
+                    return *data;
+                }
 
-        //     Iterator &operator--()
-        //     {
-        //         if (counter - 1 >= 0)
-        //         {
-        //             curr -= step;
-        //             counter -= 1;
-        //             return *this;
-        //         }
-        //         else
-        //             throw out_of_range("iterator underflow");
-        //     }
+                bool operator==(const Iterator& __other){
+                    return data == __other.data;
+                }
 
-        //     Iterator operator--(int)
-        //     {
-        //     }
+                bool operator!=(const Iterator& __other){
+                    return data!= __other.data;
+                }
 
-        //     T operator*() const
-        //     {
-        //         return curr;
-        //     }
+        };
 
-        // private:
-        //     T curr;
-        //     T step;
-        //     size_t counter;
-        //     size_t maximum;
-        // };
+        Iterator begin() const{
+            return Iterator{&data[0]};
+        }
 
-        // Iterator begin() const{
-        //     return Iterator{initial_value, step, amount()};
-        // }
-
-        // Iterator end() const{
-        //     size_t temp = initial_value;
-        //     temp = temp + step*amount();
-        //     return Iterator{temp, step, amount()};
-        // }
+        Iterator end() const{
+            return Iterator{&data[size]};
+        }
 
         size_t length(){
             return size;
@@ -268,7 +236,7 @@ class Vector{
 
         void clear(){
             size = 0;
-            cp = 0;
+            cp = 20;
         }
 
         void resize(size_t __new_size){
@@ -320,7 +288,8 @@ class Vector{
             }
         }
 
-        void sort(bool reversed= false){
+        void sort(bool (*fn)(T a, T b), bool reversed = false)
+        {
             if(!reversed){
                 // merge sort 
             } else{
@@ -338,9 +307,9 @@ class Vector{
 
         Vector<T>& concat(Vector<T>& __other, int axis=0, bool sorted=false){
             if(!axis){
-                if(!sorted)operator+=(__other);
+                if(!sorted) operator+=(__other);
                 else{
-
+                    
                 }        
             } else{
                 if(!sorted) *this = __other + *this;
@@ -351,7 +320,12 @@ class Vector{
             return *this;
         }
 
-        Vector<T> &merge(Vector<T> &__other, int axis = 0){
+        bool is_sorted(){
+            for(size_t i = 0; i < size-1; i++) if(data[i] > data[i+1]) return false;
+            return true;
+        }
+
+        Vector<T>& merge(Vector<T>& __other, int axis = 0){
             
         }
  
@@ -361,9 +335,6 @@ class Vector{
         {
             Vector<int> v;
             v.push_back({1, 2, 3});
-            Vector<bool> s{true, true, true, false, false, true, true, false};
-            Vector<int> t{1, 2, 4};
-            t.concat(v, 0);
-            t.print();
+            
             return 0;
 }

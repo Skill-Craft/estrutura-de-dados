@@ -43,8 +43,15 @@ class Tuple{
         }
 
         vector<T> to_vector() const{
-            return arr;
+            return vector<T>(arr);
         }
 
+        operator bool() const{
+            return size!= 0;
+        }
+
+        bool operator==(const Tuple<T>& other) const{
+            // return size == other.size;
+        }
 
 };

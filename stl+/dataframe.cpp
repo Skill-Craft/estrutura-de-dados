@@ -18,6 +18,11 @@ class Series{
         Series(vector<T> x){
             data = x;
         }
+
+        Series(const Series<T>& s): data{s.data} {}
+
+        Series(Series<T>&& s): data(s.data) {}
+
         vector<T> get() const{
             return data;
         }
@@ -65,25 +70,25 @@ class Series{
             return *this;
         }
 
-        Series<T>& operator+(T x) const{
+        Series<T> operator+(T x) const{
             Series<T> y(*this);
             for(auto it=y.data.begin(); it!=y.data.end();it++) *it+=x;
             return y;
         }
 
-        Series<T>& operator-(T x) const{
+        Series<T> operator-(T x) const{
             Series<T> y(*this);
             for(auto it=y.data.begin(); it!=y.data.end();it++) *it-=x;
             return y;
         }
 
-        Series<T>& operator*(T x) const{
+        Series<T> operator*(T x) const{
             Series<T> y(*this);
             for(auto it=y.data.begin(); it!=y.data.end();it++) *it*=x;
             return y;
         }
 
-        Series<T>& operator/(T x) const{
+        Series<T> operator/(T x) const{
             Series<T> y(*this);
             for(auto it=y.data.begin(); it!=y.data.end();it++) *it/=x;
             return y;
@@ -92,16 +97,16 @@ class Series{
 };
 
 
-template<typename T>
 class DataFrame{
     // TODO: switch map to an unordered map that remembers insertion order (preferably my own umap),
     // and make it so that series of any data type can be added 
     // OBS: operator[] should be able to append a series to the dataframe, if it is not present
-    map<string, Series<T>> data;
-    vecotr<string> index;
-    vector<string> columns;
+    // Maybe linked list? It remembers the insertion order and allows series of any type. 
+    // // map<string, Series<T>> data;
+    // // vector<string> index;
+    // // vector<string> columns;
 
-    public:
+    // public:
     //     DataFrame() {}
         
     //     select_row();
@@ -118,3 +123,12 @@ class DataFrame{
     //     operator=();
         
 };
+
+
+int main(){
+    vector<int> vec{1,2,4,4,3,6,75};
+    Series<int> data(vec);
+    data = data + 1;
+    data.show();
+    return 0;
+}

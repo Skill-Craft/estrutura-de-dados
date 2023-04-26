@@ -309,7 +309,7 @@ class Vector{
             if(!axis){
                 if(!sorted) operator+=(__other);
                 else{
-                    
+
                 }        
             } else{
                 if(!sorted) *this = __other + *this;
@@ -335,6 +335,6 @@ class Vector{
         {
             Vector<int> v;
             v.push_back({1, 2, 3});
-            
+            cout << v[-4];
             return 0;
 }

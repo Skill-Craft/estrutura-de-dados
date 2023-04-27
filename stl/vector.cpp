@@ -11,6 +11,7 @@ class Vector{
         size_t size;
         size_t cp;
         static constexpr size_t init_cp = 20;
+        bool sorted; // TODO: apply sorted in all constructors
 
     public:
         Vector(): size{}, cp{init_cp}, data{new T[init_cp]} {}
@@ -322,6 +323,7 @@ class Vector{
 
         bool is_sorted(){
             for(size_t i = 0; i < size-1; i++) if(data[i] > data[i+1]) return false;
+            sorted = true;
             return true;
         }
 

@@ -106,11 +106,14 @@ class series{
         vector<string> data;
         string type;
         vector<size_t> indices;
+        size_t round = (size_t)-1; 
 
     public:
         string dtype() const{return type;}
 
-        series(): type{"None"} {}
+        void round_values(size_t sz){ round = sz;}
+
+        series() = delete;
 
         series(vector<string> x){
             data = x;
@@ -119,6 +122,10 @@ class series{
             for(size_t i=1;i<=x.size();i++){
                 indices.push_back(i);
             }
+        }
+
+        series(const initializer_list<string>& init){
+
         }
 
         series(const series &s) : data{s.data}, type{s.type}, indices{s.indices} {}
@@ -130,15 +137,29 @@ class series{
         }
 
         void show() const{
-            for(size_t i=0; i < indices.size(); i++){
-                cout << indices[i] << "       " << data[i] << endl;
+            auto default_prec = cout.precision();
+            for (size_t i = 0; i < indices.size(); i++){
+                if(round != default_prec && round != (size_t)-1){
+                    cout << setprecision(round) << fixed;
+                }
+                if (type == "numeric"){
+                    double tmp = stod(data[i]);
+                    cout << indices[i] << "       " << tmp << endl;
+                } else cout << fixed << indices[i] << "       " << data[i] << endl;
             }
-            cout << "dtype" << "   " << dtype() << endl;
+            cout << setprecision(default_prec) << endl;
+            cout << "dtype"
+                 << "   " << dtype() << endl;
             cout << endl;
         }
 
         void add(string x){
             data.push_back(x);
+            indices.push_back(data.size());
+        }
+
+        void add(double x){
+            data.push_back(to_string(x));
             indices.push_back(data.size());
         }
 
@@ -151,24 +172,45 @@ class series{
             indices.insert(indices.end(), aux.begin(), aux.end());
         }
 
-        // TODO: add with initializer_list
+        void add(const vector<double> &x){
+            vector<string> y(x.size());
+            transform(x.begin(), x.end(), y.begin(), [](double d) {return to_string(d);});
+            data.insert(data.end(), y.begin(), y.end());
+            vector<size_t> aux;
+            for (size_t i = 0; i < y.size(); i++){
+                indices.push_back(indices.size() + 1);
+            }
+            indices.insert(indices.end(), aux.begin(), aux.end());
+        }
+
+        void add(const initializer_list<string>& lst){
+            for(size_t i=0; i < lst.size();i++){
+                add(lst.begin()[i]);
+            }
+        }
+
+        void add(const initializer_list<double> &lst){
+            for (size_t i = 0; i < lst.size(); i++){
+                add(lst.begin()[i]);
+            }
+        }
 
         void remove(string x){
             data.erase(find(data.begin(), data.end(), x));
         }
-        
+
         string &operator[](size_t i){
-            return data[i];
+            return data[i-1];
         }
 
-        series &operator=(const series& x){
+        series &operator=(const series &x){
             data = x.data;
             type = x.type;
             indices = x.indices;
             return *this;
         }
 
-        series &operator=(const vector<string>& x){
+        series &operator=(const vector<string> &x){
             data = x;
             return *this;
         }
@@ -186,65 +228,92 @@ class series{
         }
 
         void operator+=(double x){
-            for(auto it = this->data.begin(); it != this->data.end(); it++){
-                if(is_numeric(*it)) *it = to_string(stod(*it)+x);
-            }
+            if(type == "nmueric")
+                for (auto it = this->data.begin(); it != this->data.end(); it++)
+                    *it = to_string(stod(*it) + x);
         }
 
         void operator-=(double x){
-            for(auto it = this->data.begin(); it != this->data.end(); it++){
-                if(is_numeric(*it)) *it = to_string(stod(*it)+x);
-            }
+            if(type == "nmueric")
+                for (auto it = this->data.begin(); it != this->data.end(); it++)
+                    *it = to_string(stod(*it) + x);
         }
-        
+
         void operator*=(double x){
-            for(auto it = this->data.begin(); it != this->data.end(); it++){
-                if(is_numeric(*it)) *it = to_string(stod(*it)*x);
-            }
+            if (type == "numeric")
+                for (auto it = this->data.begin(); it != this->data.end(); it++)
+                    *it = to_string(stod(*it) * x);
         }
 
         void operator/=(double x){
-            for(auto it = this->data.begin(); it != this->data.end(); it++){
-                if(is_numeric(*it)) *it = to_string(stod(*it)/x);
-            }
+            if(type == "nmueric")
+                for (auto it = this->data.begin(); it != this->data.end(); it++)
+                    *it = to_string(stod(*it) / x);
         }
 
         series operator+(double x) const{
             series y(*this);
-            for (auto it = y.data.begin(); it != y.data.end(); it++)
-                if(is_numeric(*it)) *it = to_string(x+stod(*it));
+            if(type == "nmueric")
+                for (auto it = y.data.begin(); it != y.data.end(); it++)
+                    *it = to_string(x + stod(*it));
             return y;
         }
 
         series operator-(double x) const{
             series y(*this);
-            for (auto it = y.data.begin(); it != y.data.end(); it++)
-                if(is_numeric(*it)) *it = to_string(stod(*it)-x);
+            if(type == "nmueric")
+                for (auto it = y.data.begin(); it != y.data.end(); it++)
+                    *it = to_string(stod(*it) - x);
             return y;
         }
 
         series operator*(double x) const{
             series y(*this);
-            for (auto it = y.data.begin(); it != y.data.end(); it++)
-                if(is_numeric(*it)) *it = to_string(x * stod(*it));
+            if(type == "nmueric")
+                for (auto it = y.data.begin(); it != y.data.end(); it++)
+                    *it = to_string(x * stod(*it));
             return y;
         }
 
         series operator/(double x) const{
             series y(*this);
-            for (auto it = y.data.begin(); it != y.data.end(); it++)
-                if(is_numeric(*it)) *it = to_string(stod(*it)/x);
+            if(type == "nmueric")
+                for (auto it = y.data.begin(); it != y.data.end(); it++)
+                    *it = to_string(stod(*it) / x);
             return y;
         }
-
-        
 };
 
 class DataFrame{
-    vector<series> data;
+    vector<pair<string,series>> data;
 
-        // public:
-        //     DataFrame() {}
+    public:
+        DataFrame() = delete;
+        // DataFrame(const vector<series>& data): data(data) {}
+        // DataFrame(vector<series>&& data): data(data) {}
+        // DataFrame(const map<string, vector<string>>& data){
+
+        // }   
+
+        // DataFrame(map<string,vector<string>>&& data){
+
+        // } 
+
+        series operator[](string key){
+            for(auto x: data) if(x.first == key) return x.second;
+        }
+
+        series operator[](size_t index){
+        
+        }
+
+        // DataFrame operator[](vector<string>& keys){
+        //     for(auto x: keys)
+        // }
+
+        // DataFrame operator[](range r){}
+
+                
 
         //     select_row();
         //     select_column();
@@ -265,8 +334,10 @@ class DataFrame{
 int main(){
     vector<string> lines{"1", "2", "3", "4", "5"};
     series s(lines);
-    s.add(lines);
+    s.add({1, 2, 3, 4, 5});
+    s.round_values(2);
     s*=5;
+    cout << s[6] << endl;
     // cout << s.dtype();
     s.show();
 

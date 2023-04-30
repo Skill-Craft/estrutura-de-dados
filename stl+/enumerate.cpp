@@ -2,6 +2,7 @@
 
 using namespace std;
 
+// TODO: Implement lazy iteration 
 template <typename T>
 class enumerate{
     private:

@@ -1,33 +1,34 @@
 #include <iostream>
 
+namespace stack {
 
 using namespace std;
 
 template <typename T>
-class stack{
+class Stack{
     private:
         size_t cp;
         size_t len;
         T *arr;
     public:
-        stack(){
+        Stack(){
             cp = 20;
             arr = new T[cp];
             len = 0;
         }
 
-        ~stack(){
+        ~Stack(){
             delete[] arr;
         }
 
-        stack(const stack& source): len{source.len}, cp{source.cp}{
+        Stack(const Stack& source): len{source.len}, cp{source.cp}{
             arr = new T[cp];
             for(size_t i{}; i < source.len;i++){
                 arr[i] = source.arr[i];
             }
         }
 
-        stack(stack&& source): len{source.len}, cp{source.cp}{
+        Stack(Stack&& source): len{source.len}, cp{source.cp}{
             arr = source.arr;
             source.arr = nullptr;
         }
@@ -61,15 +62,19 @@ class stack{
         
         size_t length(){return len;}
 
-        stack& operator<<(T element){
+        Stack& operator<<(T element){
             this->push(element);
             return *this;
         }
 
 };
+};
+
+using namespace std;
+using stack::Stack;
 
 int main(){
-    stack<int> st;
+    Stack<int> st;
     st.push(1);
     // cout << st.top() << endl;
     st.push(2);

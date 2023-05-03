@@ -1,8 +1,10 @@
 #include <iostream>
 
 
-using namespace std;
 
+namespace vector{
+
+using namespace std;
 
 template<typename T>
 class Vector{
@@ -332,11 +334,14 @@ class Vector{
         }
  
 };
+};
 
-        int main()
-        {
-            Vector<int> v;
-            v.push_back({1, 2, 3});
-            cout << v[-4];
-            return 0;
+using namespace std;
+using vector::Vector;
+
+    int main(){
+        Vector<int> v;
+        v.push_back({1, 2, 3});
+        cout << v[-4];
+        return 0;
 }

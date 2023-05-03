@@ -1,6 +1,8 @@
 #include <iostream>
 #include <utility>
 
+namespace dq{
+
 using namespace std;
 
 
@@ -118,11 +120,11 @@ class Deque{
         }
 
         void reallocate(size_t new_size){
-            cp = new_size;
             auto aux = array;
             array = new T[new_size];
-            for(size_t i{}; i < cp; i++)
-                array[i] = aux[i];
+            for(size_t i{}; i < sz; i++)
+                array[i] = aux[(first + i + 1) % cp];
+            cp = new_size;
             first = cp-1;
 
         }
@@ -154,9 +156,13 @@ ostream& operator<<(ostream& os, const Deque<T>& deque){
     return os;
 }
 
+};
+
+using namespace std;
+using dq::Deque, dq::Side;
 
 int main(){
-    Deque<int> dq(20);
+    Deque<int> dq(3);
     cout << dq;
     dq.push(Side::Back, 1);
     dq.push(Side::Back, 0);
@@ -165,8 +171,7 @@ int main(){
     dq.push(Side::Front, 4);
     cout << dq << endl;
     dq << 5;
-    dq << 5 << 6;
-    dq >> 3 >> 4;
+    dq >> 3;
     cout << dq;
     // cout << dq.front() << " " << dq.back() << endl;
     return 0;

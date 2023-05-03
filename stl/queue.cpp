@@ -1,34 +1,38 @@
 #include <iostream>
 
+
+namespace queue{
+
+
 using namespace std;
 
 template <typename T>
-class queue{
+class Queue{
     private:
         size_t cp;
         size_t len;
         T *arr;
         size_t first;
     public:
-        queue(){
+        Queue(){
             cp = 20;
             arr = new T[cp];
             len = 0;
             first = (size_t)(-1);
         }
 
-        ~queue(){
+        ~Queue(){
             delete[] arr;
         }
 
-        queue(const queue& source): len{source.len}, cp{source.cp}{
+        Queue(const Queue& source): len{source.len}, cp{source.cp}{
             arr = new T[cp];
             for(size_t i{}; i < source.len;i++){
                 arr[i] = source.arr[i];
             }
         }
 
-        queue(queue&& source): len{source.len}, cp{source.cp}{
+        Queue(Queue&& source): len{source.len}, cp{source.cp}{
             arr = source.arr;
             source.arr = nullptr;
         }
@@ -67,15 +71,20 @@ class queue{
         
         size_t length(){return len;}
 
-        queue& operator<<(T element){
+        Queue& operator<<(T element){
             this->push(element);
             return *this;
         }
 
 };
 
+};
+
+using namespace std;
+using queue::Queue;
+
 int main(){
-    queue<int> q;
+    Queue<int> q;
     q << 1 << 2 << 3;
     cout << q.pop();
     cout << q.pop();

@@ -13,7 +13,6 @@ class Vector{
         size_t size;
         size_t cp;
         static constexpr size_t init_cp = 20;
-        bool sorted; // TODO: apply sorted in all constructors
 
     public:
         Vector(): size{}, cp{init_cp}, data{new T[init_cp]} {}
@@ -243,20 +242,25 @@ class Vector{
         }
 
         void resize(size_t __new_size){
-            if(__new_size >= cp){
-                T* temp = new T[cp * 2];
+            if(__new_size <=0) throw runtime_error("invalid argument");
+            if(__new_size >= size){
+                T* temp = new T[__new_size];
                 for(size_t i = 0; i < size; i++){
                     temp[i] = data[i];
                 }
                 delete[] data;
                 data = temp;
-                cp *= 2;
+                cp = __new_size;
             } 
             if(__new_size < size){
-
-            } else{
-
-            }
+                T *temp = new T[cp * 2];
+                for (size_t i = 0; i < __new_size; i++){
+                    temp[i] = data[i];
+                }
+                delete[] data;
+                data = temp;
+                size = cp = __new_size;
+            } 
         }
 
         void reserve(size_t __new_size){
@@ -309,17 +313,17 @@ class Vector{
         }
 
         Vector<T>& concat(Vector<T>& __other, int axis=0, bool sorted=false){
-            if(!axis){
-                if(!sorted) operator+=(__other);
-                else{
+            // if(!axis){
+            //     if(!sorted) operator+=(__other);
+            //     else{
 
-                }        
-            } else{
-                if(!sorted) *this = __other + *this;
-                else{
+            //     }        
+            // } else{
+            //     if(!sorted) *this = __other + *this;
+            //     else{
 
-                }
-            }
+            //     }
+            // }
             return *this;
         }
 
@@ -330,7 +334,7 @@ class Vector{
         }
 
         Vector<T>& merge(Vector<T>& __other, int axis = 0){
-            
+            return *this;
         }
  
 };

@@ -166,9 +166,9 @@ int str::compare(str& other){
 
 
 int main(){
-    // str a("oioioioi");
-    // str b(a*8);
-    // cout << b;
+    str a("oioioioi");
+    str b(a*8);
+    cout << b;
     // a.swap(b);
     return 0;
 }

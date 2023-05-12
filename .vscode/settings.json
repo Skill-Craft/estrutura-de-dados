@@ -57,6 +57,12 @@
         "deque": "cpp",
         "__split_buffer": "cpp",
         "forward_list": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "unordered_set": "cpp",
+        "__bit_reference": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "map": "cpp",
+        "set": "cpp"
     }
 }

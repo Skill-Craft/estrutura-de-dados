@@ -118,6 +118,7 @@ class LinkedList{
         };
 
         Iterator begin(){ return Iterator(head); }
+        
         Iterator end() { 
             return Iterator(tail); //nullptr? 
         }

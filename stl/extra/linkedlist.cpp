@@ -6,8 +6,10 @@ using namespace std;
 
 class Node{
     int *value;
-    public:
     Node* next;
+    Node* prev;
+    public:
+    friend class LinkedList ; friend class DoubleLinkedList; //friend class Stack; friend class Queue; friend class Deque;
     Node(int value) : value(new int(value)) {};
     Node(const Node& node){};
     void setval(int v) { *value = v; }
@@ -16,9 +18,10 @@ class Node{
 };
 
 class LinkedList{
-    Node* head;
-    Node* tail;
-    size_t sz;
+    protected:
+        Node* head;
+        Node* tail;
+        size_t sz;
     
     public:
         LinkedList(){head = nullptr; tail = nullptr;sz = 0;}
@@ -125,7 +128,27 @@ class LinkedList{
 
 };
 
-class Stack: public LinkedList{
+
+class DoubleLinkedList: public LinkedList{
+    public:
+        // virtual void push_front(int val) override;
+        // virtual void push_back(int val) override;
+        // virtual int pop_front() override;
+        // virtual int pop_back() override;
+
+        // class ReverseIterator{
+
+        // };
+
+        // virtual ReverseIterator rbegin();
+        // virtual ReverseIterator rend();
+};
+
+class Deque: public DoubleLinkedList{
+
+};
+
+class Stack: public DoubleLinkedList{
         virtual void push_front(int val) override final { throw invalid_argument("not allowed"); }
         virtual int pop_front() override final { throw invalid_argument("not allowed"); }
         virtual int first() override final { throw invalid_argument("not allowed"); }
@@ -134,7 +157,7 @@ class Stack: public LinkedList{
         Stack& operator>> (int val) {val = pop_back(); return *this;}
 };  
 
-class Queue: public LinkedList{
+class Queue: public DoubleLinkedList{
         virtual void push_front(int val) override final {throw invalid_argument("not allowed");}
         virtual int pop_back() override final {throw invalid_argument("not allowed");}
         virtual int top() override final { throw invalid_argument("not allowed"); }
@@ -143,14 +166,12 @@ class Queue: public LinkedList{
         Queue& operator>> (int val) {val = pop_front(); return *this;}
 };
 
-class DoubleLinkedList{
-
-};
 
 int main(){
     Queue  q;
     q << 12 << 13 << 14 << 15;
     q.printall();
+    cout << q.size() << endl;
     int a, b, c, d;
     q >> a >> b >> c;
     q.printall();

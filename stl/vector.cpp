@@ -135,7 +135,7 @@ class Vector{
           return data[--size];  
         }
 
-        void erase(size_t __index){
+        T erase(size_t __index){
             
         }
 
@@ -173,11 +173,12 @@ class Vector{
                 }
 
                 Iterator& operator++(){
+                    Iterator aux = data;
                     data++;
-                    return *this;
+                    return aux;
                 }
 
-                Iterator &operator++(int){
+                Iterator& operator++(int){
                     data++;
                     return *this;
                 }

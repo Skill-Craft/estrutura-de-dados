@@ -45,7 +45,7 @@ class Tuple{
         vector<T> to_vector() const{
             return vector<T>(arr);
         }
-
+        
         operator bool() const{
             return size!= 0;
         }

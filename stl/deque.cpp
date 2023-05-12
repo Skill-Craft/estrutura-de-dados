@@ -62,6 +62,9 @@ class Deque{
 
         template <typename Ts>
         friend ostream& operator<<(ostream& os, const Deque<Ts>& deque);
+        
+        template <typename Ts>
+        friend ostream& operator<<(ostream& os, const Deque<Ts>&& deque);
 
         Deque(): array{new T[40]}, sz{}, cp{40}, first{cp-1}, last{} {}
 
@@ -156,13 +159,19 @@ ostream& operator<<(ostream& os, const Deque<T>& deque){
     return os;
 }
 
+template <typename T>
+ostream& operator<<(ostream& os, const Deque<T>&& deque){
+    deque.print();
+    return os;
+}
+
 };
 
 using namespace std;
 using dq::Deque, dq::Side;
 
 int main(){
-    Deque<int> dq(3);
+    Deque<int> dq{1,2,3,4,6,3};
     cout << dq;
     dq.push(Side::Back, 1);
     dq.push(Side::Back, 0);

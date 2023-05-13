@@ -71,12 +71,15 @@ class Object{
             case Type::FLOAT:
                 os << obj.floatpoint;
                 break;
+            default:
+                throw runtime_error("invalid type");
         }
         return os;
     }
 };
 
 // TODO: recreate Python's list
+// typeinfo might help this. Object class should be more efficiently implemented. Maybe dynamic allocation?
 class list: public vector<Object>{
     public:
         template <typename T>
@@ -85,22 +88,11 @@ class list: public vector<Object>{
         }
 };
 
-// class List{
-//     vector<Object*> data;
-
-//     public:
-//         List(): data{} {}
-//         void push_back(Object *obj){
-//             data.push_back(obj);
-//         }
-// };
-
-
 int main(){
     Object a(10);
     list data;
     data.push_back(a);
-    data.push<int>(20);
+    data.push<double>(20);
     cout << data[1];
     return 0;
 }

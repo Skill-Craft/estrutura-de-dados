@@ -39,4 +39,4 @@ Também se encontra neste repositório algumas classes da biblioteca STL de C++,
 <br> - unique pointer
 <br> - shared pointer
 <br>
- <br> Finalmente, algumas estruturas especiais como Data Frames, tensores e range serão criados em C++, além de ser implementado o algoritmo de Huffman em C.
+ <br> Finalmente, algumas estruturas especiais como Data Frames, tensores e range serão criados em C++, além de ser implementado o algoritmo de Huffman, .

@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <map>
 
 using namespace std;
 
@@ -70,25 +71,50 @@ struct HuffmanTree{
 
     // }
 
+    string encoded_message() const{
+        return to_string(18);
+    }
+
 };
 
+ostream& operator<<(ostream& os, const HuffmanTree& tree){
+    os << tree.encoded_message();
+    return os;
+}
 
-struct HuffmanPreprocessor{
+struct HuffmanEncoder{
 
     string buffer;
     priority_queue<NodeHuffman *, vector<NodeHuffman *>, Compare> frequencies;
-    HuffmanPreprocessor(string content) : buffer(content){
+    HuffmanEncoder(string content) : buffer(content){
         frequencies = get_frequencies();
     }
 
     priority_queue<NodeHuffman *, vector<NodeHuffman *>, Compare> get_frequencies(){
         priority_queue<NodeHuffman*, vector<NodeHuffman*>, Compare> pq;
+        map<char,size_t> counter;
         for(auto c: buffer){
-            
+            counter[c]++;
+        }
+        for (auto pr: counter){
+            pq.push(new NodeHuffman(pr.second, pr.first));
         }
         return pq;
     }
 };
+
+
+size_t getsizeof(NodeHuffman enc){
+
+}
+
+size_t getsizeof(HuffmanTree enc){
+
+}
+
+size_t getsizeof(HuffmanEncoder enc){
+
+}
 
 int main(){
     NodeHuffman *a = new NodeHuffman(10, 'a');
@@ -102,13 +128,8 @@ int main(){
     pq.push(d);
 
     HuffmanTree ht(pq);
-    cout << ht.root ->left->code;
-
-
-    // NodeHuffman* huffman = new NodeHuffman(10);
-
-    // pq.push(new NodeHuffman(13));
-    // pq.push(new NodeHuffman(12));
-    // cout << pq.top()->freq;
+    cout << sizeof(ht.root->right->left) << endl
+         << ht.root->right->left->code << endl
+         << sizeof("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     return 0;
 }

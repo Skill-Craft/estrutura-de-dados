@@ -64,6 +64,7 @@
         "__tree": "cpp",
         "map": "cpp",
         "set": "cpp",
-        "__string": "cpp"
+        "__string": "cpp",
+        "stdexcept": "cpp"
     }
 }

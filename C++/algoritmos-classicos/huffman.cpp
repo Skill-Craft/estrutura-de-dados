@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <bitset>
 #include <vector>
 #include <queue>
 #include <map>
@@ -102,11 +103,26 @@ struct HuffmanEncoder{
 
     void encode_message(string filepath) const{
         ofstream writer;
-        writer.open(filepath,ios::binary);
+        writer.open(filepath);
         if(!writer) throw runtime_error("can't open file " + filepath + " for writing");
         string aux = encoded_msg_string();
-        writer.write(aux.c_str(),sizeof(aux.c_str())); // test it later 
+        writer.write(aux.c_str(),aux.size()); // test it later 
         writer.close();
+    }
+
+    void encode_binary(string filepath) const{
+        const int chunk_size = 64;
+        vector<bitset<chunk_size>> bit_chunks;
+        for (int i = 0; i < message.length(); i += 64){
+            string chunk_str = message.substr(i, 64);
+            bit_chunks.emplace_back(bitset<chunk_size>(chunk_str));
+        }
+        ofstream outfile(filepath, ios::binary);
+        for (const auto &chunk : bit_chunks){
+            unsigned long long value = chunk.to_ullong();                   
+            outfile.write(reinterpret_cast<char *>(&value), sizeof(value)); 
+        }
+        outfile.close();
     }
 
     string encoded_msg_string() const{
@@ -178,15 +194,9 @@ struct HuffmanDecoder{
 
 
 int main(){
-    string s = "sdffdgghhjkkj\0";
+    string s = "sdffdgghhjkkj";
     HuffmanPreprocessor alfa(s);
-    // alfa.frequencies = alfa.get_frequencies();
-    cout << alfa.frequencies.size() << endl;
     HuffmanEncoder beta(alfa.frequencies, s);
-    beta.encode_message("helloworld.dat");
-    // cout << beta.root->right->left->right->c;
-    // pq = alfa.get_frequencies();
-    // cout << pq.size() << endl;
-        // cout << getsizeof(alfa.tree) << endl<< 100+130+8*15;
-        return 0;
+    beta.encode_binary("hello.bin");
+    return 0;
 }

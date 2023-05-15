@@ -1,42 +1,57 @@
 # Estrutura de dados
-Neste repositório foram implementadas as principais estruturas de dados em C, além de alguns algoritmos de ordenação de vetores, ambos lecionados na disciplina Estrutura de Dados, no IME.
 
-Dentre elas, temos:
+Neste repositório foram criadas diversas estruturas de dados nas seguintes linguagens de programação:
 
-<br> - Pilha
-<br> - Fila
-<br> - Lista encadeada
-<br> - Lista duplamente encadeada
-<br> - Lista encadeada circular
-<br> - Árvore binária de busca
-<br> - Hash Table
+## C
+Nesta parte do repositório foram recriadas diversas estrutura de dados, como:
 
-Os algoritmos de ordenação de vetores são:
+- linked list
+- deque
+- stack
+- queue
+- binary search tree
+- Hash table
 
-<br> - Bubble sort
-<br> - Bucket sort
-<br> - Counting sort
-<br> - Heap sort
-<br> - Insert sort
-<br> - Merge sort
-<br> - Quick sort
-<br> - Radix sort
-<br> - Select sort
-<br> - Shell sort
+Também foram implementados algoritmos de busca, como:
 
-Também se encontra neste repositório algumas classes da biblioteca STL de C++, que serão reimplementadas usando os conhecimentos adquiridos. Entre elas, estão:
+- heap sort
+- bubble sort
+- quick sort 
+- merge sort
+- insertion sort
+- bucket sort
+- radix sort
+- select sort
 
-<br> - ostream
-<br> - istream
-<br> - set
-<br> - vector
-<br> - string
-<br> - map
-<br> - unordered map
-<br> - queue
-<br> - priority queue
-<br> - stack
-<br> - unique pointer
-<br> - shared pointer
-<br>
- <br> Finalmente, algumas estruturas especiais como Data Frames, tensores e range serão criados em C++, além de ser implementado o algoritmo de Huffman
+## C++
+Nesta parte do repositório, foram recriadas as principais classes da STL, incluindo:
+
+- string
+- vector
+- unique pointer
+- shared pointer
+- weak pointer
+- deque
+- queue
+- stack
+- map
+- unordered map (hash map)
+
+Também foram criadas novas classes, incluindo:
+
+- dataframe
+- tensor
+- range
+- list
+- enumerate
+- zip
+<!-- 
+## C#
+## Rust
+
+## Python
+## Javascript
+## Java
+## R
+
+ -->

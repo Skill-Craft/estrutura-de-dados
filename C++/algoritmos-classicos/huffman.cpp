@@ -91,10 +91,9 @@ struct HuffmanEncoder{
     }
 
     string query(char c, NodeHuffman* current) const{
+        if(current == nullptr) return "\0";
         if(current->c == c) return current->code;
-        else if(current == nullptr){
-            return "\0";
-        } else{
+        else{
             string aux1 = query(c, current->left);
             string aux2 = query(c, current->right);
             return aux1=="\0" ? aux2 : aux1;
@@ -111,7 +110,11 @@ struct HuffmanEncoder{
     }
 
     string encoded_msg_string() const{
-        return "\0";
+        string aux;
+        for(auto c:message){
+            aux+=query(c,root);
+        }
+        return aux;
     }
 
 };
@@ -158,22 +161,24 @@ size_t getsizeof(HuffmanEncoder enc){
 
 
 struct HuffmanDecoder{
+    string filepath;
+    HuffmanEncoder enc;
 
-    NodeHuffman* root;
+    HuffmanDecoder(HuffmanEncoder enc, string filepath): enc(enc), filepath(filepath){}
 
-    HuffmanDecoder(NodeHuffman* root): root(root) {}
-    HuffmanDecoder(HuffmanEncoder enc): root(enc.root) {
-        enc.root = nullptr;
+    void decode_message(){
+        ifstream reader;
+        reader.open(filepath, ios::binary);
+        if(!reader) throw runtime_error("Could not found file");
+        // reader.read()
+        reader.close();
     }
-
-
-    void decode_message(string filepath){}
 };
 
 
 
 int main(){
-    string s = "sdffdgghhjkkj";
+    string s = "sdffdgghhjkkj\0";
     HuffmanPreprocessor alfa(s);
     // alfa.frequencies = alfa.get_frequencies();
     cout << alfa.frequencies.size() << endl;

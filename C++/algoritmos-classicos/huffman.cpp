@@ -35,6 +35,7 @@ struct Compare{
 struct HuffmanEncoder{
     NodeHuffman* root;
     string message;
+    HuffmanEncoder(): root(nullptr), message("") {}
     HuffmanEncoder(priority_queue<NodeHuffman *, vector<NodeHuffman *>, Compare> &q, string message): message(message){
         // if(q.size() == 0) throw runtime_error("queue is empty");
         if(q.size() == 1) throw runtime_error("pointless use of Huffman algorithm");
@@ -54,10 +55,25 @@ struct HuffmanEncoder{
         if(!code_emplacing()) throw runtime_error("Could not code Huffman tree nodes");
     }
 
+    HuffmanEncoder(HuffmanEncoder& other): root(other.root), message(other.message) {
+        other.root = nullptr;
+    }
+
+    HuffmanEncoder& operator=(HuffmanEncoder& other){
+        root = other.root; 
+        message = other.message;
+        other.root = nullptr;
+    }
+    HuffmanEncoder& operator=(HuffmanEncoder&& other) {
+        root = other.root;
+        message = other.message;
+        other.root = nullptr;
+    }
+
     ~HuffmanEncoder() {
         // Delete tree
         if(root == nullptr) return;
-
+        else delete_node(root);
     }
 
     bool code_emplacing(){
@@ -87,9 +103,6 @@ struct HuffmanEncoder{
 
     }
 
-    void show_content(NodeHuffman *node) const{
-
-    }
 
     string query(char c, NodeHuffman* current) const{
         if(current == nullptr) return "\0";
@@ -106,11 +119,11 @@ struct HuffmanEncoder{
         writer.open(filepath);
         if(!writer) throw runtime_error("can't open file " + filepath + " for writing");
         string aux = encoded_msg_string();
-        writer.write(aux.c_str(),aux.size()); // test it later 
+        writer.write(aux.c_str(),aux.size());  
         writer.close();
     }
 
-    void encode_binary(string filepath) const{
+    void encode_binary(string filepath) const{ // TODO: fix this method
         const int chunk_size = 64;
         vector<bitset<chunk_size>> bit_chunks;
         for (int i = 0; i < message.length(); i += 64){
@@ -132,6 +145,50 @@ struct HuffmanEncoder{
         }
         return aux;
     }
+
+    void serialize_tree(string filepath, string filepath2) const{
+        ofstream writer;
+        writer.open(filepath);
+        if(!writer) 
+            throw runtime_error("Could not write file");
+            serialize_pre_order(root, writer);
+        
+        writer.close();
+        writer.open(filepath2);
+        if(!writer)
+            throw runtime_error("Could not write file");
+
+        writer.close();
+    }
+
+    private:
+        
+        void show_table_single_node(NodeHuffman *node) const{
+
+        }
+
+        void serialize_node(NodeHuffman* node, ofstream& writer) const{
+            writer << node-> code << " " << node-> c << " " << node->freq << "\n";
+            writer.close();
+        }
+
+        void serialize_pre_order(NodeHuffman* node, ofstream& writer) const{
+            serialize_node(node, writer);
+            if(node->left != nullptr) serialize_pre_order(node->left, writer);
+            if(node->right != nullptr) serialize_pre_order(node->right, writer);
+        }
+
+        void serialize_sym_order(NodeHuffman* node, ofstream& writer) const{
+            if(node->left != nullptr) serialize_sym_order(node->left, writer);
+            serialize_node(node, writer);
+            if(node->right != nullptr) serialize_sym_order(node->right, writer);
+        }
+
+        void delete_node(NodeHuffman* node){
+            if(node->left !=nullptr) delete_node(node->left);
+            if(node->right !=nullptr) delete_node(node->right);
+            delete node;
+        }
 
 };
 
@@ -163,14 +220,14 @@ ostream& operator<<(ostream& os, const HuffmanEncoder& encoder){
 }
 
 
-size_t getsizeof(NodeHuffman enc){
+size_t getsizeof(NodeHuffman& enc){
     size_t aux = sizeof(enc) + sizeof(enc.code.c_str());
     if(enc.left != nullptr) aux += sizeof(enc.left);
     if(enc.right != nullptr) aux += sizeof(enc.right);
     return aux;
 }
 
-size_t getsizeof(HuffmanEncoder enc){
+size_t getsizeof(HuffmanEncoder& enc){
     return getsizeof(*(enc.root)) + sizeof(enc);
 }
 
@@ -178,9 +235,18 @@ size_t getsizeof(HuffmanEncoder enc){
 
 struct HuffmanDecoder{
     string filepath;
+    string pre_order_filepath;
+    string symetric_order_filepath;
     HuffmanEncoder enc;
 
     HuffmanDecoder(HuffmanEncoder enc, string filepath): enc(enc), filepath(filepath){}
+    HuffmanDecoder(string pre, string sym, string filepath): filepath(filepath), pre_order_filepath(pre), symetric_order_filepath(sym) {
+        enc = generate_tree(pre, sym);
+    }
+
+    HuffmanEncoder generate_tree(string pre, string sym){
+
+    }
 
     void decode_message(){
         ifstream reader;

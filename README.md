@@ -48,10 +48,11 @@ Também foram criadas novas classes, incluindo:
 <!-- 
 ## C#
 ## Rust
-
+## Julia
 ## Python
 ## Javascript
 ## Java
 ## R
+## Golang 
 
  -->

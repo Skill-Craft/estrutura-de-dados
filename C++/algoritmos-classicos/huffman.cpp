@@ -189,7 +189,7 @@ struct HuffmanEncoder{
         }
 
         void pre_order(NodeHuffman *node, ofstream &writer) const{
-            writer << node->c;
+            if(node->c) writer << node->c;
             if (node->left != nullptr)
                 pre_order(node->left, writer);
             if (node->right != nullptr)
@@ -199,7 +199,7 @@ struct HuffmanEncoder{
         void sym_order(NodeHuffman *node, ofstream &writer) const{
             if (node->left != nullptr)
                 sym_order(node->left, writer);
-            writer << node->c;
+            if(node->c) writer << node->c;
             if (node->right != nullptr)
                 sym_order(node->right, writer);
         }

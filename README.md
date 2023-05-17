@@ -46,13 +46,13 @@ Também foram criadas novas classes, incluindo:
 - enumerate
 - zip
 <!-- 
-## C#
-## Rust
-## Julia
-## Python
-## Javascript
-## Java
-## R
-## Golang 
+## C# - idk
+## Rust - idk
+## Julia - Machine/Deep Learning small module
+## Python - speedup algorithm (?)
+## Javascript - some web-related
+## Java - idk
+## R - idk
+## Golang - idk
 
  -->

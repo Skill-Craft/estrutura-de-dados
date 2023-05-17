@@ -63,11 +63,13 @@ struct HuffmanEncoder{
         root = other.root; 
         message = other.message;
         other.root = nullptr;
+        return *this;
     }
     HuffmanEncoder& operator=(HuffmanEncoder&& other) {
         root = other.root;
         message = other.message;
         other.root = nullptr;
+        return *this;
     }
 
     ~HuffmanEncoder() {
@@ -146,30 +148,65 @@ struct HuffmanEncoder{
         return aux;
     }
 
-    void serialize_tree(string filepath, string filepath2) const{
+    void serialize_tree(string pre, string sym, const ios_base::openmode& flag= ios::out) const{
         ofstream writer;
-        writer.open(filepath);
+        string pre_order = "." + pre;
+        string sym_order = "." + sym;
+        writer.open(pre_order);
         if(!writer) 
             throw runtime_error("Could not write file");
             serialize_pre_order(root, writer);
         
         writer.close();
-        writer.open(filepath2);
+        writer.open(sym_order,flag);
         if(!writer)
             throw runtime_error("Could not write file");
+            serialize_sym_order(root,writer);
+        writer.close();
+    }
 
+    void pre_and_symmetric_order(string pre, string sym, const ios_base::openmode& flag= ios::out) const{
+        ofstream writer;
+        string pre_ord = "." + pre;
+        string sym_ord = "." + sym;
+        writer.open(pre_ord);
+        if (!writer)
+            throw runtime_error("Could not write file");
+        pre_order(root, writer);
+
+        writer.close();
+        writer.open(sym_ord, flag);
+        if (!writer)
+            throw runtime_error("Could not write file");
+        sym_order(root, writer);
         writer.close();
     }
 
     private:
         
         void show_table_single_node(NodeHuffman *node) const{
+            cout << "|\t" << node->c << "\t|\t" << node->code << "\t|\t" << node->freq << "\t|" << endl; 
+        }
 
+        void pre_order(NodeHuffman *node, ofstream &writer) const{
+            writer << node->c;
+            if (node->left != nullptr)
+                pre_order(node->left, writer);
+            if (node->right != nullptr)
+                pre_order(node->right, writer);
+        }
+
+        void sym_order(NodeHuffman *node, ofstream &writer) const{
+            if (node->left != nullptr)
+                sym_order(node->left, writer);
+            writer << node->c;
+            if (node->right != nullptr)
+                sym_order(node->right, writer);
         }
 
         void serialize_node(NodeHuffman* node, ofstream& writer) const{
+            if(node->c == '\0') return;
             writer << node-> code << " " << node-> c << " " << node->freq << "\n";
-            writer.close();
         }
 
         void serialize_pre_order(NodeHuffman* node, ofstream& writer) const{
@@ -189,6 +226,8 @@ struct HuffmanEncoder{
             if(node->right !=nullptr) delete_node(node->right);
             delete node;
         }
+
+
 
 };
 
@@ -245,7 +284,10 @@ struct HuffmanDecoder{
     }
 
     HuffmanEncoder generate_tree(string pre, string sym){
-
+        ifstream reader;
+        reader.open(pre);
+        //le td aqui
+        
     }
 
     void decode_message(){
@@ -263,6 +305,7 @@ int main(){
     string s = "The Zen of Python, by Tim Peters\n\nBeautiful is better than ugly.\nExplicit is better than implicit.\nSimple is better than complex.\nComplex is better than complicated.\nFlat is better than nested.\nSparse is better than dense.\nReadability counts.\nSpecial cases aren't special enough to break the rules.\n Although practicality beats purity.\nErrors should never pass silently.\nUnless explicitly silenced.\nIn the face of ambiguity, refuse the temptation to guess.\nThere should be one-- and preferably only one-- obvious way to do it.\nAlthough that way may not be obvious at first unless you're Dutch.\n Now is better than never.\nAlthough never is often better than * right * now.\nIf the implementation is hard to explain, it's a bad idea.\n If the implementation is easy to explain, it may be a good idea.\nNamespaces are one honking great idea-- let's do more of those!"; 
     HuffmanPreprocessor alfa(s);
     HuffmanEncoder beta(alfa.frequencies, s);
-    beta.encode_message("zenofpython.bin");
+    beta.encode_message("zenofpython.txt");
+    beta.pre_and_symmetric_order("a.txt", "b.txt");
     return 0;
 }

@@ -47,12 +47,12 @@ Também foram criadas novas classes, incluindo:
 - zip
 <!-- 
 ## C# - idk
-## Rust - idk
+## Rust - blockchain (?) idk
 ## Julia - Machine/Deep Learning small module
 ## Python - speedup algorithm (?)
-## Javascript - some web-related
+## Javascript - something web-related
 ## Java - idk
-## R - idk
+## R - dynamic programming (?) idk
 ## Golang - idk
 
  -->

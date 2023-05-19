@@ -1,6 +1,7 @@
 # Estrutura de dados
 
-Neste repositório foram criadas diversas estruturas de dados nas seguintes linguagens de programação:
+Este repositório contem as estruturas de dados e algoritmos básicos, lecionados na disciplina de mesmo nome, no IME. <br>
+Foram criadas diversas estruturas de dados nas seguintes linguagens de programação:ll
 
 ## C
 Nesta parte do repositório foram recriadas diversas estrutura de dados, como:
@@ -48,7 +49,7 @@ Também foram criadas novas classes, incluindo:
 <!-- 
 ## C# - idk
 ## Rust - blockchain (?) idk
-## Julia - Machine/Deep Learning small module
+## Julia - Machine/Deep Learning small module (?)
 ## Python - speedup algorithm (?)
 ## Javascript - something web-related
 ## Java - idk

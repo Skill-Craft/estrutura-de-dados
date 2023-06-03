@@ -24,7 +24,6 @@ struct NodeHuffman{
 
 };
 
-
 struct Compare{
     bool operator()(const NodeHuffman* a, const NodeHuffman* b) const{
         return a->freq > b->freq;
@@ -43,7 +42,6 @@ struct HuffmanEncoder{
             if(q.size() == 1){
                 root = q.top(); 
                 q.pop();
-                break;
             }
             NodeHuffman* first = q.top(); q.pop();
             NodeHuffman* second = q.top(); q.pop();
@@ -298,7 +296,6 @@ struct HuffmanDecoder{
         reader.close();
     }
 };
-
 
 
 int main(){

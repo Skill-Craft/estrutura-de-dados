@@ -49,11 +49,8 @@ Também foram criadas novas classes, incluindo:
 <!-- 
 ## C# - idk
 ## Rust - blockchain (?) idk
-## Julia - Machine/Deep Learning small module (?)
+## Python - Machine/Deep Learning small module (?)
 ## Python - speedup algorithm (?)
 ## Javascript - something web-related
 ## Java - idk
-## R - dynamic programming (?) idk
-## Golang - idk
-
  -->

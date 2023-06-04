@@ -2,9 +2,8 @@ from typing import Iterable
 
 class Zip:
     def __init__(self, *iterators, length_check=False):
-        if not all(isinstance(iterator, Iterable) for iterator in iterators):
-            raise TypeError
-        self.iterators = iterators
+        assert all(isinstance(iterator, Iterable) for iterator in iterators)
+        self.iterators = [iter(iterator)for iterator in iterators]
         self.min = min(len(iterator) for iterator in iterators)
         self.length_check = length_check
 
@@ -17,7 +16,7 @@ class Zip:
             raise StopIteration
         elif self.length_check and self.n == self.min:
             raise TypeError
-        ret =  tuple(self.iterator[self.n] for self.iterator in self.iterators)
+        ret =  tuple(next(iterator) for iterator in self.iterators)
         self.n += 1
         return tuple(ret)
     

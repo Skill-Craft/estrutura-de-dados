@@ -46,11 +46,25 @@ Também foram criadas novas classes, incluindo:
 - list
 - enumerate
 - zip
+
+## Python
+
+Foram recriadas as classes mais usadas em Python, como:
+
+- reversed
+- map
+- zip
+- filter
+- reduce
+- hashmap (dictionary)
+
+## Java
+
+
+
 <!-- 
-## C# - idk
-## Rust - blockchain (?) idk
-## Python - Machine/Deep Learning small module (?)
-## Python - speedup algorithm (?)
-## Javascript - something web-related
+## Rust - idk
+## Julia - idk
+## Python - idk
 ## Java - idk
  -->

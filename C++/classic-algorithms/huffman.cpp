@@ -123,20 +123,20 @@ struct HuffmanEncoder{
         writer.close();
     }
 
-    void encode_binary(string filepath) const{ // TODO: fix this method
-        const int chunk_size = 64;
-        vector<bitset<chunk_size>> bit_chunks;
-        for (int i = 0; i < message.length(); i += 64){
-            string chunk_str = message.substr(i, 64);
-            bit_chunks.emplace_back(bitset<chunk_size>(chunk_str));
-        }
-        ofstream outfile(filepath, ios::binary);
-        for (const auto &chunk : bit_chunks){
-            unsigned long long value = chunk.to_ullong();                   
-            outfile.write(reinterpret_cast<char *>(&value), sizeof(value)); 
-        }
-        outfile.close();
-    }
+    // void encode_binary(string filepath) const{ // TODO: fix this method
+    //     const int chunk_size = 64;
+    //     vector<bitset<chunk_size>> bit_chunks;
+    //     for (int i = 0; i < message.length(); i += 64){
+    //         string chunk_str = message.substr(i, 64);
+    //         bit_chunks.emplace_back(bitset<chunk_size>(chunk_str));
+    //     }
+    //     ofstream outfile(filepath, ios::binary);
+    //     for (const auto &chunk : bit_chunks){
+    //         unsigned long long value = chunk.to_ullong();                   
+    //         outfile.write(reinterpret_cast<char *>(&value), sizeof(value)); 
+    //     }
+    //     outfile.close();
+    // }
 
     string encoded_msg_string() const{
         string aux;
@@ -270,39 +270,39 @@ size_t getsizeof(HuffmanEncoder& enc){
 
 
 
-struct HuffmanDecoder{
-    string filepath;
-    string pre_order_filepath;
-    string symetric_order_filepath;
-    HuffmanEncoder enc;
+// struct HuffmanDecoder{
+//     string filepath;
+//     string pre_order_filepath;
+//     string symetric_order_filepath;
+//     HuffmanEncoder enc;
 
-    HuffmanDecoder(HuffmanEncoder enc, string filepath): enc(enc), filepath(filepath){}
-    HuffmanDecoder(string pre, string sym, string filepath): filepath(filepath), pre_order_filepath(pre), symetric_order_filepath(sym) {
-        enc = generate_tree(pre, sym);
-    }
+//     HuffmanDecoder(HuffmanEncoder enc, string filepath): enc(enc), filepath(filepath){}
+//     HuffmanDecoder(string pre, string sym, string filepath): filepath(filepath), pre_order_filepath(pre), symetric_order_filepath(sym) {
+//         enc = generate_tree(pre, sym);
+//     }
 
-    HuffmanEncoder generate_tree(string pre, string sym){
-        ifstream reader;
-        reader.open(pre);
-        //le td aqui
+//     // HuffmanEncoder generate_tree(string pre, string sym){
+//     //     ifstream reader;
+//     //     reader.open(pre);
+//     //     //le td aqui
         
-    }
+//     // }
 
-    void decode_message(){
-        ifstream reader;
-        reader.open(filepath, ios::binary);
-        if(!reader) throw runtime_error("Could not found file");
-        // reader.read()
-        reader.close();
-    }
-};
+//     void decode_message(){
+//         ifstream reader;
+//         reader.open(filepath, ios::binary);
+//         if(!reader) throw runtime_error("Could not found file");
+//         // reader.read()
+//         reader.close();
+//     }
+// };
 
 
 int main(){
     string s = "The Zen of Python, by Tim Peters\n\nBeautiful is better than ugly.\nExplicit is better than implicit.\nSimple is better than complex.\nComplex is better than complicated.\nFlat is better than nested.\nSparse is better than dense.\nReadability counts.\nSpecial cases aren't special enough to break the rules.\n Although practicality beats purity.\nErrors should never pass silently.\nUnless explicitly silenced.\nIn the face of ambiguity, refuse the temptation to guess.\nThere should be one-- and preferably only one-- obvious way to do it.\nAlthough that way may not be obvious at first unless you're Dutch.\n Now is better than never.\nAlthough never is often better than * right * now.\nIf the implementation is hard to explain, it's a bad idea.\n If the implementation is easy to explain, it may be a good idea.\nNamespaces are one honking great idea-- let's do more of those!"; 
     HuffmanPreprocessor alfa(s);
     HuffmanEncoder beta(alfa.frequencies, s);
-    beta.encode_message("zenofpython.txt");
-    beta.pre_and_symmetric_order("a.txt", "b.txt");
+    // beta.encode_message("zenofpython.txt");
+    beta.serialize_tree("a.txt", "b.txt");
     return 0;
 }
